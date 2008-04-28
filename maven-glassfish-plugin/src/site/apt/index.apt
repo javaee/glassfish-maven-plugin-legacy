@@ -17,3 +17,42 @@ Introduction
     * {{{run-mojo.html}glassfish:run}}
 
     []
+
+Usage
+
+    This plugin and its dependencies are living in
+    {{{http://download.java.net/maven/2}the java.net maven2 repository}} and
+    {{{http://download.java.net/maven/glassfish}the java.net glassfish repository}}.
+    So you need to have the following declarations in your POM:
+
+
+---------------------------------------------------------
+  <repositories>
+    ...
+    <repository>
+      <id>glassfish-repository</id>
+      <name>Java.net Repository for Glassfish</name>
+      <url>http://download.java.net/maven/glassfish</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    ...
+    <pluginRepository>
+      <id>glassfish-repository</id>
+      <name>Java.net maven2 repository</name>
+      <url>http://download.java.net/maven/2</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.glassfish</groupId>
+        <artifactId>maven-glassfish-plugin</artifactId>
+      </plugin>
+      ...
+    </plugins>
+    ...
+  </plugins>
+---------------------------------------------------------
