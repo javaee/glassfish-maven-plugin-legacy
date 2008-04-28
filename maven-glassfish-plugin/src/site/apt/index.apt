@@ -1,0 +1,19 @@
+                    ------
+                    Maven GlassFish plugin
+                    ------
+                    Kohsuke Kawaguchi
+                    ------
+                    ---
+
+
+
+
+Introduction
+
+    This project develops a Maven plugin that deals with GlassFish v3.
+    Currently the following goals are available:
+
+
+    * {{{run-mojo.html}glassfish:run}}
+
+    []
