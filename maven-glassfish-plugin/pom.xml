@@ -1,15 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.glassfish</groupId>
   <artifactId>maven-glassfish-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-alpha-1</version>
   <name>Maven plugin for GlassFish</name>
   <url>https://maven-glassfish-plugin.dev.jav.anet/</url>
 
   <scm>
-    <connection>scm:svn:https://svn.dev.java.net/svn/glassfish-maven-plugin/trunk/glassfish-maven-plugin</connection>
+    <connection>scm:svn:https://svn.dev.java.net/svn/glassfish-maven-plugin/tags/maven-glassfish-plugin-1.0-alpha-1</connection>
   </scm>
   
   <build>
