@@ -58,7 +58,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Executes GlassFish v3 in place by deploying the current application in development.
+ * Executes GlassFish v3 inside the current Maven and deploys the application being developed.
  *
  * @goal run
  * @execute phase=compile
@@ -80,7 +80,6 @@ public class RunMojo extends AbstractMojo {
      * Directory for static resources, JSPs, etc.
      *
      * @parameter expression="${basedir}/src/main/webapp"
-     * @required
      */
     protected File resourcesDirectory;
 
