@@ -103,4 +103,12 @@
     </repository>
   </repositories>
 
+  <licenses>
+    <license>
+      <distribution>repo</distribution>
+      <name>CDDL and GPLv2 w/ classpath execption dual license</name>
+      <url>https://glassfish.dev.java.net/public/CDDL+GPL.html</url>
+    </license>
+  </licenses>
+
 </project>
