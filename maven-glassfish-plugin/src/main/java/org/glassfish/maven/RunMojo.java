@@ -37,31 +37,31 @@
 
 package org.glassfish.maven;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.artifact.Artifact;
+import org.apache.maven.model.Resource;
+import org.glassfish.embed.GFApplication;
 import org.glassfish.embed.GlassFish;
 import org.glassfish.embed.ScatteredWar;
-import org.glassfish.embed.GFApplication;
 
-import java.io.File;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
-import java.net.URL;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Executes GlassFish v3 in place by deploying the current application in development.
  *
  * @goal run
- * @phase generate-test-sources
+ * @execute phase=compile
  * @requiresDependencyResolution runtime
  * 
  * @author Kohsuke Kawaguchi
@@ -104,6 +104,12 @@ public class RunMojo extends AbstractMojo {
             for( Artifact a : (Set<Artifact>)project.getArtifacts() ) {
                 classpath.add(a.getFile().toURI().toURL());
             }
+            // resources, so that changes take effect in real time
+            for (Resource res : (List<Resource>)project.getBuild().getResources()) {
+                classpath.add(new File(res.getDirectory()).toURI().toURL());
+            }
+            // main artifacts
+            classpath.add(new File(project.getBuild().getOutputDirectory()).toURI().toURL());
         } catch (MalformedURLException e) {
             throw new MojoExecutionException("Failed to convert to URL",e);
         }
