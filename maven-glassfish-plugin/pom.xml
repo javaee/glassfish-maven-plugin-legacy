@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.glassfish</groupId>
+  <artifactId>maven-glassfish-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Maven plugin for GlassFish</name>
+  <url>https://maven-glassfish-plugin.dev.jav.anet/</url>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <configuration>
+          <goalPrefix>glassfish</goalPrefix>
+        </configuration>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <version>1.8</version>
+      </extension>
+    </extensions>  
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+      <version>2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.embedded</groupId>
+      <artifactId>gf-embedded-api</artifactId>
+      <version>1.0-alpha-2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.distributions</groupId>
+      <artifactId>web-all</artifactId>
+      <version>10.0-build-20080427</version>
+      <!-- TODO: need to make this overridable -->
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-plugin-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <distributionManagement>
+    <site>
+      <id>maven-glassfish-plugin-www</id>
+      <url>java-net:/maven-glassfish-plugin/trunk/www/</url>
+    </site>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>glassfish-repository</id>
+      <name>Java.net Repository for Glassfish</name>
+      <url>http://download.java.net/maven/glassfish</url>
+    </repository>
+    <repository>
+      <id>java.net2</id>
+      <name>Java.net Maven2 Repository</name>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+  </repositories>
+
+</project>
