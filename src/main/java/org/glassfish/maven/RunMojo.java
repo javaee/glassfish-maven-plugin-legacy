@@ -94,8 +94,15 @@ public class RunMojo extends AbstractMojo {
      */
     protected File webXml;
 
+    /**
+     * HTTP port to use. Defaults to 8080.
+     *
+     * @parameter
+     */
+    protected int httpPort = 8080;
+
     public void execute() throws MojoExecutionException, MojoFailureException {
-        GlassFish glassfish = new GlassFish();
+        GlassFish glassfish = new GlassFish(httpPort);
 
         List<URL> classpath = new ArrayList<URL>();
 
