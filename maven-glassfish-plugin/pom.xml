@@ -57,7 +57,7 @@
     <dependency>
       <groupId>org.glassfish.distributions</groupId>
       <artifactId>web-all</artifactId>
-      <version>10.0-build-20080427</version>
+      <version>10.0-build-20080430</version>
       <!-- TODO: need to make this overridable -->
     </dependency>
 
