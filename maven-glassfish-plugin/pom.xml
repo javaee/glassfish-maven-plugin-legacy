@@ -3,12 +3,12 @@
   <groupId>org.glassfish</groupId>
   <artifactId>maven-glassfish-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.0-alpha-3</version>
+  <version>1.0-alpha-4-SNAPSHOT</version>
   <name>Maven plugin for GlassFish</name>
   <url>https://maven-glassfish-plugin.dev.jav.anet/</url>
 
   <scm>
-    <connection>scm:svn:https://svn.dev.java.net/svn/maven-glassfish-plugin/tags/maven-glassfish-plugin-1.0-alpha-3</connection>
+    <connection>scm:svn:https://svn.dev.java.net/svn/maven-glassfish-plugin/trunk/mavne-glassfish-plugin</connection>
   </scm>
   
   <build>
