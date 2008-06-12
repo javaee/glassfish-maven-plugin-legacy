@@ -1,0 +1,50 @@
+  ------
+  Introduction
+  ------
+  Dave Whitla <dave.whitla@ocean.net.au>
+  ------
+  March 25, 2008
+
+
+Maven Glassfish Plugin
+
+  The Maven Glassfish Plugin is a Maven2 plugin allowing management of Glassfish domains and component deployments from within the Maven build lifecycle. It encapsulates domain configuration and deployment attributes within the build configuration for a more rapid development integration loop and simplified management of continuous integration testing of components destined for deployment within the Glassfish V2 and later JavaEE containers.
+
+* Goals Overview
+
+  * {{{create-domain-mojo.html}glassfish:create-domain}} Create a new Glassfish domain.
+
+  * {{{start-domain-mojo.html}glassfish:start-domain}} Start an existing Glassfish domain.
+
+  * {{{deploy-mojo.html}glassfish:deploy}} Deploy JavaEE artifacts to a running domain.
+
+  * {{{redeploy-mojo.html}glassfish:redeploy}} Redeploy JavaEE artifacts to a running domain.
+
+  * {{{undeploy-mojo.html}glassfish:undeploy}} Undeploy JavaEE components from a running domain.
+
+  * {{{stop-domain-mojo.html}glassfish:stop-domain}} Stop a running Glassfish domain.
+
+  * {{{delete-domain-mojo.html}glassfish:delete-domain}} Delete an existing Glassfish domain.
+
+* Usage
+
+  Instructions on how to use the Maven Release Plugin can be found {{{usage.html}here}}.
+
+* Examples
+
+  To provide you with better understanding on some usages of the Maven Release Plugin,
+  you can take a look into the following examples:
+
+
+  * {{{examples/perform-release.html}Perform Release}}
+
+  * {{{examples/prepare-release.html}Prepare Release}}
+
+  * {{{examples/generate-release-poms.html}Generate Release POMs}}
+
+  * {{{examples/lock-files.html}Lock Files During Release}}
+
+  * {{{examples/run-goals-before-commit.html}Run Additional Goals Before Commit}}
+
+  * {{{examples/branch.html}Create a branch}}
+

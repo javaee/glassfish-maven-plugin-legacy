@@ -1,0 +1,244 @@
+<!--
+  ~
+  ~ Copyright (c) 2007, Dave Whitla
+  ~
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~
+  ~  * Redistributions of source code must retain the above copyright notice,
+  ~    this list of conditions and the following disclaimer.
+  ~
+  ~  * Redistributions in binary form must reproduce the above copyright notice,
+  ~    this list of conditions and the following disclaimer in the documentation
+  ~    and/or other materials provided with the distribution.
+  ~
+  ~  * Neither the name of the copyright holder nor the names of contributors
+  ~    may be used to endorse or promote products derived from this software
+  ~    without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ~ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ~ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  ~ OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  ~ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  ~ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  ~ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  ~ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  ~ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.glassfish.maven.plugin</groupId>
+    <artifactId>maven-glassfish-plugin-wartest</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Maven Glassfish Plugin WAR Test</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--<scm>-->
+        <!--<connection>scm:svn:file://localhost/${project.file.parentFile.parentFile}/target/svnroot/trunk/project</connection>-->
+        <!--<developerConnection>-->
+        <!--scm:svn:file://localhost/${project.file.parentFile.parentFile}/target/svnroot/trunk/project-->
+        <!--</developerConnection>-->
+    <!--</scm>-->
+
+    <build>
+
+        <resources>
+            <!-- filter resources -->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <!-- filter war-sources -->
+            <resource>
+                <directory>${basedir}/src/main/webapp</directory>
+                <targetPath>../exploded</targetPath>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <glassfishDirectory>${as.home}</glassfishDirectory>
+                    <adminPassword>password</adminPassword>
+                    <autoCreate>true</autoCreate>
+                    <debug>false</debug>
+                    <echo>true</echo>
+                    <terse>true</terse>
+                    <skip>${test.int.skip}</skip>
+                    <domain>
+                        <name>${project.artifactId}</name>
+                        <adminPort>4848</adminPort>
+                        <httpPort>8080</httpPort>
+                        <httpsPort>8443</httpsPort>
+                        <iiopPort>3700</iiopPort>
+                        <jmsPort>7676</jmsPort>
+                        <reuse>false</reuse>
+                        <jvmOptions>
+                            <option>-Djava.security.auth.login.config=${project.build.outputDirectory}/login.conf</option>
+                        </jvmOptions>
+                        <properties>
+                            <property>
+                                <name>server.java-config.debug-enabled</name>
+                                <value>false</value>
+                            </property>
+                            <property>
+                                <name>server.log-service.file</name>
+                                <value>${project.build.directory}/artifacts/glassfish/server.log</value>
+                            </property>
+                        </properties>
+                        <auth>
+                            <realm>
+                                <name>testRealm</name>
+                                <className>com.sun.enterprise.security.auth.realm.file.FileRealm</className>
+                                <properties>
+                                    <property>
+                                        <name>jaas-context</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>file</name>
+                                        <value>${project.build.outputDirectory}/keyfile</value>
+                                    </property>
+                                </properties>
+                            </realm>
+                        </auth>
+                        <resources>
+                            <connectionFactory>
+                                <jndiName>jms/testQueueConnectionFactory</jndiName>
+                                <type>queueConnectionFactory</type>
+                                <properties>
+                                    <property>
+                                        <name>UserName</name>
+                                        <value>guest</value>
+                                    </property>
+                                    <property>
+                                        <name>Password</name>
+                                        <value>guest</value>
+                                    </property>
+                                    <property>
+                                        <name>AddressList</name>
+                                        <value>localhost:7676</value>
+                                    </property>
+                                </properties>
+                            </connectionFactory>
+                            <jmsTopic>
+                                <jndiName>jms/testTopic</jndiName>
+                                <destinationName>TestTopic</destinationName>
+                                <connectionFactory>
+                                    <jndiName>jms/testTopicConnectionFactory</jndiName>
+                                    <properties>
+                                        <property>
+                                            <name>UserName</name>
+                                            <value>guest</value>
+                                        </property>
+                                        <property>
+                                            <name>Password</name>
+                                            <value>guest</value>
+                                        </property>
+                                        <property>
+                                            <name>AddressList</name>
+                                            <value>localhost:7676</value>
+                                        </property>
+                                    </properties>
+                                </connectionFactory>
+                            </jmsTopic>
+                            <jdbcConnectionPool>
+                                <jndiName>testJDBCPool</jndiName>
+                                <type>javax.sql.DataSource</type>
+                                <dataSourceName>testDS</dataSourceName>
+                                <dataSourceClassName>org.apache.derby.jdbc.ClientDataSource</dataSourceClassName>
+                                <description>Test_Connection_Pool</description>
+                                <allowNonComponentCallers>false</allowNonComponentCallers>
+                                <properties>
+                                    <property>
+                                        <name>PortNumber</name>
+                                        <value>1555</value>
+                                    </property>
+                                    <property>
+                                        <name>Password</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>User</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>serverName</name>
+                                        <value>localhost</value>
+                                    </property>
+                                    <property>
+                                        <name>DatabaseName</name>
+                                        <value>testDB</value>
+                                    </property>
+                                    <property>
+                                        <name>connectionAttributes</name>
+                                        <value>;create=true</value>
+                                    </property>
+                                </properties>
+                            </jdbcConnectionPool>
+                        </resources>
+                    </domain>
+                    <components>
+                        <component>
+                            <name>${artifactId}</name>
+                            <artifact>${project.build.directory}/artifacts/${project.build.finalName}.war</artifact>
+                        </component>
+                    </components>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <webappDirectory>${project.build.directory}/exploded</webappDirectory>
+                    <outputDirectory>${project.build.directory}/artifacts</outputDirectory>
+                    <primaryArtifact>false</primaryArtifact>
+                    <warSourceDirectory>${project.build.directory}/exploded</warSourceDirectory>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>repo1</id>
+            <name>Maven Central Repository</name>
+            <url>file://${project.file.parentFile.parentFile}/target/repository</url>
+        </repository>
+    </distributionManagement>
+    
+</project>

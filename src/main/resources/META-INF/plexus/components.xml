@@ -1,0 +1,216 @@
+<!--
+  ~
+  ~ Copyright (c) 2007, Dave Whitla
+  ~
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~
+  ~  * Redistributions of source code must retain the above copyright notice,
+  ~    this list of conditions and the following disclaimer.
+  ~
+  ~  * Redistributions in binary form must reproduce the above copyright notice,
+  ~    this list of conditions and the following disclaimer in the documentation
+  ~    and/or other materials provided with the distribution.
+  ~
+  ~  * Neither the name of the copyright holder nor the names of contributors
+  ~    may be used to endorse or promote products derived from this software
+  ~    without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ~ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ~ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  ~ OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  ~ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  ~ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  ~ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  ~ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  ~ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+        
+<component-set>
+    <components>
+
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>ejb</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <lifecycles>
+                    <lifecycle>
+                        <id>default</id>
+                        <!-- START SNIPPET: ejb-lifecycle -->
+                        <phases>
+                            <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                            <compile>org.apache.maven.plugins:maven-compiler-plugin:compile</compile>
+                            <process-test-resources>
+                                org.apache.maven.plugins:maven-resources-plugin:testResources
+                            </process-test-resources>
+                            <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                            <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                            <package>
+                                org.apache.maven.plugins:maven-ejb-plugin:ejb
+                            </package>
+                            <pre-integration-test>au.net.ocean.maven.plugin:maven-glassfish-plugin:pre-integration-test
+                            </pre-integration-test>
+                            <post-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:post-integration-test
+                            </post-integration-test>
+                            <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+                            <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                        </phases>
+                        <!-- END SNIPPET: ejb-lifecycle -->
+                    </lifecycle>
+                </lifecycles>
+            </configuration>
+        </component>
+
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>war</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <lifecycles>
+                    <lifecycle>
+                        <id>default</id>
+                        <!-- START SNIPPET: war-lifecycle -->
+                        <phases>
+                            <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                            <compile>org.apache.maven.plugins:maven-compiler-plugin:compile</compile>
+                            <process-test-resources>
+                                org.apache.maven.plugins:maven-resources-plugin:testResources
+                            </process-test-resources>
+                            <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                            <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                            <package>org.apache.maven.plugins:maven-war-plugin:war</package>
+                            <pre-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:pre-integration-test
+                            </pre-integration-test>
+                            <post-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:post-integration-test
+                            </post-integration-test>
+                            <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+                            <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                        </phases>
+                        <!-- END SNIPPET: war-lifecycle -->
+                    </lifecycle>
+                </lifecycles>
+            </configuration>
+        </component>
+
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>ear</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <lifecycles>
+                    <lifecycle>
+                        <id>default</id>
+                        <!-- START SNIPPET: ear-lifecycle -->
+                        <phases>
+                            <generate-resources>
+                                org.apache.maven.plugins:maven-ear-plugin:generate-application-xml
+                            </generate-resources>
+                            <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                            <package>org.apache.maven.plugins:maven-ear-plugin:ear</package>
+                            <pre-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:pre-integration-test
+                            </pre-integration-test>
+                            <post-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:post-integration-test
+                            </post-integration-test>
+                            <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+                            <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                        </phases>
+                        <!-- END SNIPPET: ear-lifecycle -->
+                    </lifecycle>
+                </lifecycles>
+            </configuration>
+        </component>
+
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>rar</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <lifecycles>
+                    <lifecycle>
+                        <id>default</id>
+                        <!-- START SNIPPET: rar-lifecycle -->
+                        <phases>
+                            <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                            <compile>org.apache.maven.plugins:maven-compiler-plugin:compile</compile>
+                            <process-test-resources>
+                                org.apache.maven.plugins:maven-resources-plugin:testResources
+                            </process-test-resources>
+                            <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                            <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                            <package>org.apache.maven.plugins:maven-rar-plugin:rar</package>
+                            <pre-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:pre-integration-test
+                            </pre-integration-test>
+                            <post-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:post-integration-test
+                            </post-integration-test>
+                            <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+                            <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                        </phases>
+                        <!-- END SNIPPET: rar-lifecycle -->
+                    </lifecycle>
+                </lifecycles>
+            </configuration>
+        </component>
+
+
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>par</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <!-- START SNIPPET: par-lifecycle -->
+                <phases>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>org.apache.maven.plugins:maven-compiler-plugin:compile</compile>
+                    <process-test-resources>org.apache.maven.plugins:maven-resources-plugin:testResources</process-test-resources>
+                    <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                    <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                    <package>
+                        org.apache.maven.plugins:maven-par-plugin:par
+                    </package>
+                    <pre-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:pre-integration-test
+                    </pre-integration-test>
+                    <post-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:post-integration-test
+                    </post-integration-test>
+                    <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+                <!-- END SNIPPET: par-lifecycle -->
+            </configuration>
+        </component>
+
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>ejb3</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <!-- START SNIPPET: ejb3-lifecycle -->
+                <phases>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>org.apache.maven.plugins:maven-compiler-plugin:compile</compile>
+                    <process-test-resources>org.apache.maven.plugins:maven-resources-plugin:testResources</process-test-resources>
+                    <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                    <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                    <package>
+                        org.apache.maven.plugins:maven-ejb3-plugin:ejb3
+                    </package>
+                    <pre-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:pre-integration-test
+                    </pre-integration-test>
+                    <post-integration-test>org.glassfish.maven.plugin:maven-glassfish-plugin:post-integration-test
+                    </post-integration-test>
+                    <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+                <!-- END SNIPPET: ejb3-lifecycle -->
+            </configuration>
+        </component>
+
+    </components>
+</component-set>
+        

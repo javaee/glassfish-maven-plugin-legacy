@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~
+  ~ Copyright (c) 2007, Dave Whitla
+  ~
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~
+  ~  * Redistributions of source code must retain the above copyright notice,
+  ~    this list of conditions and the following disclaimer.
+  ~
+  ~  * Redistributions in binary form must reproduce the above copyright notice,
+  ~    this list of conditions and the following disclaimer in the documentation
+  ~    and/or other materials provided with the distribution.
+  ~
+  ~  * Neither the name of the copyright holder nor the names of contributors
+  ~    may be used to endorse or promote products derived from this software
+  ~    without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ~ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ~ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  ~ OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  ~ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  ~ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  ~ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  ~ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  ~ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~
+      ~~ Project Information ~~
+      ~~~~~~~~~~~~~~~~~~~~~~~-->
+    <name>Maven Glassfish Plugin</name>
+    <description>
+        The Glassfish Maven Plugin is a Maven2 plugin allowing management of Glassfish domains and component deployments
+        from within the Maven build lifecycle. It encapsulates domain configuration and deployment attributes within the build
+        configuration for a more rapid development integration loop and simplified management of continuous integration testing of
+        components destined for deployment within the Glassfish V2 and later JavaEE containers.
+    </description>
+    <url>http://maven.ocean.net.au/plugin/glassfish</url>
+    <inceptionYear>2007</inceptionYear>
+    <licenses>
+        <license>
+            <name>The GNU General Public Licence version 2</name>
+            <url>http://www.ocean.net.au/licences/GPLv2Licence.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>dwhitla</id>
+            <name>Dave Whitla</name>
+            <url>http://www.ocean.net.au/</url>
+            <roles>
+                <role>Maintainer</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+    </developers>
+    <contributors></contributors>
+    <!--<organization></organization>-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~
+      ~~ POM Relationships ~~
+      ~~~~~~~~~~~~~~~~~~~~~-->
+    <groupId>org.glassfish.maven.plugin</groupId>
+    <artifactId>maven-glassfish-plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--<dependencyManagement></dependencyManagement>-->
+    <dependencies>
+        <dependency>
+            <groupId>au.net.ocean.maven.plugin</groupId>
+            <artifactId>maven-plugin-tools</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>2.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>2.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-plugin-testing-harness</artifactId>
+            <version>1.0-beta-1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>au.net.ocean</groupId>
+            <artifactId>util</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!--<modules></modules>-->
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~
+      ~~ Build Environment ~~
+      ~~~~~~~~~~~~~~~~~~~~~-->
+    <issueManagement>
+        <system>Jira</system>
+        <url>http://jira.ocean.net.au/browse/MGP</url>
+    </issueManagement>
+    <ciManagement>
+        <system>TeamCity</system>
+        <url>http://teamcity.ocean.net.au/viewType.html?buildTypeId=bt7</url>
+        <notifiers>
+            <notifier>
+                <type>email</type>
+                <configuration>
+                    <subscription-address>http://teamcity.ocean.net.au/profile.html?</subscription-address>
+                </configuration>
+                <sendOnError>true</sendOnError>
+                <sendOnFailure>true</sendOnFailure>
+                <sendOnSuccess>true</sendOnSuccess>
+                <sendOnWarning>true</sendOnWarning>
+            </notifier>
+            <notifier>
+                <type>jabber</type>
+                <configuration>
+                    <subscription-address>http://teamcity.ocean.net.au/profile.html?</subscription-address>
+                </configuration>
+                <sendOnError>true</sendOnError>
+                <sendOnFailure>true</sendOnFailure>
+                <sendOnSuccess>true</sendOnSuccess>
+                <sendOnWarning>true</sendOnWarning>
+            </notifier>
+        </notifiers>
+    </ciManagement>
+    <mailingLists>
+        <mailingList>
+            <name>Maven Glassfish Plugin Mailing List</name>
+            <subscribe>maven-glassfish-plugin-subscribe@ocean.net.au</subscribe>
+            <unsubscribe>maven-glassfish-plugin-unsubscribe@ocean.net.au</unsubscribe>
+            <post>maven-glassfish-plugin@ocean.net.au</post>
+            <archive>http://maven.ocean.net.au/modmbox/maven-glassfish-plugin/</archive>
+        </mailingList>
+    </mailingLists>
+    <scm>
+        <connection>scm:svn:http://svn.ocean.net.au/maven-glassfish-plugin</connection>
+        <developerConnection>scm:svn:https://svn.ocean.net.au/maven-glassfish-plugin</developerConnection>
+        <url>http://fisheye.ocean.net.au/browse/maven-glassfish-plugin</url>
+    </scm>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~
+      ~~ Maven Environment ~~
+      ~~~~~~~~~~~~~~~~~~~~~-->
+    <!--<prerequisites></prerequisites>-->
+    <repositories>
+        <repository>
+            <id>external.ocean.net.au</id>
+            <name>Ocean External Repository</name>
+            <url>http://maven.ocean.net.au/external</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>release.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/release</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven1.dev.java.net</id>
+            <url>http://download.java.net/maven/1</url>
+            <layout>legacy</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven2.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>external.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/external</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>release.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/release</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>apache</id>
+            <name>Apache Snapshot Repository</name>
+            <url>http://cvs.apache.org/maven-snapshot-repository</url>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>release.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>dav:http://maven.ocean.net.au/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Snapshot Repository</name>
+            <url>dav:http://maven.ocean.net.au/snapshot</url>
+        </snapshotRepository>
+        <site>
+            <id>maven.ocean.net.au</id>
+            <name>Ocean MavenPlugins Web Site</name>
+            <url>dav:http://maven.ocean.net.au/plugin/glassfish</url>
+        </site>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>profile</name>
+                    <value>ci</value>
+                </property>
+            </activation>
+            <properties>
+                <as.domain.dir>/tmp</as.domain.dir>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>au.net.ocean.maven.plugin</groupId>
+                            <artifactId>maven-glassfish-plugin</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>createDomain</goal>
+                                        <goal>deploy</goal>
+                                        <goal>deleteDomain</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>developer</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>profile</name>
+                    <value>developer</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>au.net.ocean.maven.plugin</groupId>
+                            <artifactId>maven-glassfish-plugin</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>deploy</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+
+    <!--~~~~~~~~~~~~~~~~~~
+      ~~ Build Settings ~~
+      ~~~~~~~~~~~~~~~~~~-->
+    <packaging>maven-plugin</packaging>
+    <properties>
+        <licence>GPLv2</licence>
+        <build.number>${user.name}</build.number>
+        <test.unit.skip>true</test.unit.skip>
+        <test.int.skip>true</test.int.skip>
+    </properties>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}-${build.number}</finalName>
+        <resources>
+            <!-- filter resources by default -->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <!-- filter test-resources by default -->
+            <testResource>
+                <directory>${basedir}/src/test/resources</directory>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+                <!--<version>2.2-SNAPSHOT</version>-->
+                <!--<inherited>true</inherited>-->
+                <!--<configuration>-->
+                    <!--<configLocation>ocean/checkstyle.xml</configLocation>-->
+                    <!--<headerLocation>ocean/${licence}Licence.txt</headerLocation>-->
+                    <!--<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>-->
+                    <!--<outputDirectory>${project.build.directory}/artifacts/checkstyle</outputDirectory>-->
+                    <!--<enableRSS>false</enableRSS>-->
+                    <!--<linkXRef>false</linkXRef>-->
+                    <!--<enableRulesSummary>false</enableRulesSummary>-->
+                    <!--<consoleOutput>true</consoleOutput>-->
+                    <!--<failsOnError>false</failsOnError>-->
+                    <!--<failsOnViolation>true</failsOnViolation>-->
+                    <!--<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>pre-test-check</id>-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>check</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>au.net.ocean</groupId>-->
+                        <!--<artifactId>build-tools</artifactId>-->
+                        <!--<version>1.4</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <compilerArguments>
+                        <nowarn />
+                        <encoding>utf8</encoding>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <extractors>
+                        <extractor />
+                    </extractors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-descriptor-after-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                        <configuration>
+                            <extractors>
+                                <extractor>annotation</extractor>
+                            </extractors>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>au.net.ocean.maven.plugin</groupId>
+                        <artifactId>maven-plugin-tools</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <skip>${test.unit.skip}</skip>
+                    <includes>
+                        <include>**/*UnitTest.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*$*</exclude>
+                        <exclude>**/Abstract*Test.java</exclude>
+                    </excludes>
+                    <forkMode>once</forkMode>
+                    <childDelegation>false</childDelegation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${test.int.skip}</skip>
+                            <includes>
+                                <include>**/*IntegrationTest.java</include>
+                                <include>**/*WebTest.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/artifacts</outputDirectory>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <version>${project.version}</version>
+                            <url>${project.url}</url>
+                            <Implementation-Build>${build.number}</Implementation-Build>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.0.1</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/artifacts</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.0-beta-7</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <addSchema>false</addSchema>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <resume>false</resume>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+        </extensions>
+
+    </build>
+    <!--<reporting></reporting>-->
+
+
+</project>
