@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+  ~ DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
   ~
-  ~ Copyright (c) 2007, Dave Whitla
+  ~ Copyright 2007-2008 maven-glassfish-plugin developers. All rights reserved.
   ~
-  ~ All rights reserved.
+  ~ The contents of this file are subject to the terms of either the GNU
+  ~ General Public License Version 2 only ("GPL") or the Common Development
+  ~ and Distribution License("CDDL") (collectively, the "License").  You
+  ~ may not use this file except in compliance with the License. You can obtain
+  ~ a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+  ~ or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
+  ~ language governing permissions and limitations under the License.
   ~
-  ~ Redistribution and use in source and binary forms, with or without
-  ~ modification, are permitted provided that the following conditions are met:
+  ~ When distributing the software, include this License Header Notice in each
+  ~ file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+  ~ Sun designates this particular file as subject to the "Classpath" exception
+  ~ as provided by the copyright holder in the GPL Version 2 section of the
+  ~ License file that accompanied this code.  If applicable, add the following
+  ~ below the License Header, with the fields enclosed by brackets [] replaced 
+  ~ by your own identifying information:
+  ~ "Portions Copyrighted [year] [name of copyright owner]"
   ~
-  ~  * Redistributions of source code must retain the above copyright notice,
-  ~    this list of conditions and the following disclaimer.
+  ~ Contributor(s):
   ~
-  ~  * Redistributions in binary form must reproduce the above copyright notice,
-  ~    this list of conditions and the following disclaimer in the documentation
-  ~    and/or other materials provided with the distribution.
-  ~
-  ~  * Neither the name of the copyright holder nor the names of contributors
-  ~    may be used to endorse or promote products derived from this software
-  ~    without specific prior written permission.
-  ~
-  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  ~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  ~ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  ~ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
-  ~ OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-  ~ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-  ~ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-  ~ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-  ~ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-  ~ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-  ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  ~
+  ~ If you wish your version of this file to be governed by only the CDDL or
+  ~ only the GPL Version 2, indicate your decision by adding "[Contributor]
+  ~ elects to include this software in this distribution under the [CDDL or GPL
+  ~ Version 2] license."  If you don't indicate a single choice of license, a
+  ~ recipient has the option to distribute your version of this file under
+  ~ either the CDDL, the GPL Version 2 or to extend the choice of license to
+  ~ its licensees as provided above.  However, if you add GPL Version 2 code
+  ~ and therefore, elected the GPL Version 2 license, then the option applies
+  ~ only if the new code is made subject to such option by the copyright
+  ~ holder.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,12 +49,16 @@
         configuration for a more rapid development integration loop and simplified management of continuous integration testing of
         components destined for deployment within the Glassfish V2 and later JavaEE containers.
     </description>
-    <url>http://maven.ocean.net.au/plugin/glassfish</url>
+    <url>http://maven-glassfish-plugin.dev.java.net/</url>
     <inceptionYear>2007</inceptionYear>
     <licenses>
         <license>
-            <name>The GNU General Public Licence version 2</name>
-            <url>http://www.ocean.net.au/licences/GPLv2Licence.txt</url>
+            <name>The Common Development and Distribution Licence version 1.0 (CDDL)</name>
+            <url>https://glassfish.dev.java.net/public/CDDL+GPL.html</url>
+        </license>
+        <license>
+            <name>The GNU General Public Licence version 2 (GPLv2) with classpath exception</name>
+            <url>https://glassfish.dev.java.net/public/CDDL+GPL.html</url>
         </license>
     </licenses>
     <developers>
@@ -311,20 +317,20 @@
         </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
-        <repository>
-            <id>release.ocean.net.au</id>
-            <name>Ocean Release Repository</name>
-            <url>dav:http://maven.ocean.net.au/release</url>
-        </repository>
         <snapshotRepository>
             <id>snapshot.ocean.net.au</id>
             <name>Ocean Snapshot Repository</name>
             <url>dav:http://maven.ocean.net.au/snapshot</url>
         </snapshotRepository>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>maven2.dev.java.net</id>
+            <name>JavaNet Release Repository</name>
+            <url>java-net:/maven2-repository/trunk/www/repository/</url>
+        </repository>
         <site>
-            <id>maven.ocean.net.au</id>
-            <name>Ocean MavenPlugins Web Site</name>
-            <url>dav:http://maven.ocean.net.au/plugin/glassfish</url>
+            <id>maven-glassfish-plugin.dev.java.net</id>
+            <url>java-net:/maven-glassfish-plugin/trunk/www/</url>
         </site>
     </distributionManagement>
     <profiles>
@@ -397,7 +403,7 @@
       ~~~~~~~~~~~~~~~~~~-->
     <packaging>maven-plugin</packaging>
     <properties>
-        <licence>GPLv2</licence>
+        <licence>CDDL+GPLv2</licence>
         <build.number>${user.name}</build.number>
         <test.unit.skip>true</test.unit.skip>
         <test.int.skip>true</test.int.skip>
@@ -427,41 +433,41 @@
         </testResources>
 
         <plugins>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-                <!--<version>2.2-SNAPSHOT</version>-->
-                <!--<inherited>true</inherited>-->
-                <!--<configuration>-->
-                    <!--<configLocation>ocean/checkstyle.xml</configLocation>-->
-                    <!--<headerLocation>ocean/${licence}Licence.txt</headerLocation>-->
-                    <!--<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>-->
-                    <!--<outputDirectory>${project.build.directory}/artifacts/checkstyle</outputDirectory>-->
-                    <!--<enableRSS>false</enableRSS>-->
-                    <!--<linkXRef>false</linkXRef>-->
-                    <!--<enableRulesSummary>false</enableRulesSummary>-->
-                    <!--<consoleOutput>true</consoleOutput>-->
-                    <!--<failsOnError>false</failsOnError>-->
-                    <!--<failsOnViolation>true</failsOnViolation>-->
-                    <!--<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>pre-test-check</id>-->
-                        <!--<phase>validate</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>check</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>au.net.ocean</groupId>-->
-                        <!--<artifactId>build-tools</artifactId>-->
-                        <!--<version>1.4</version>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <configLocation>${basedir}/build-tools/checkstyle.xml</configLocation>
+                    <headerLocation>${basedir}/build-tools/${licence}Licence.txt</headerLocation>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                    <suppressionsLocation>${basedir}/build-tools/checkstyle-suppressions.xml</suppressionsLocation>
+                    <outputDirectory>${project.build.directory}/artifacts/checkstyle</outputDirectory>
+                    <enableRSS>false</enableRSS>
+                    <linkXRef>false</linkXRef>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>false</failsOnError>
+                    <failsOnViolation>true</failsOnViolation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pre-test-check</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -591,6 +597,11 @@
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
                 <version>1.0-beta-2</version>
+            </extension>
+            <extension>
+                <groupId>org.jvnet.wagon-svn</groupId>
+                <artifactId>wagon-svn</artifactId>
+                <version>1.8</version>
             </extension>
         </extensions>
 
