@@ -155,16 +155,44 @@
     </ciManagement>
     <mailingLists>
         <mailingList>
-            <name>Maven Glassfish Plugin Mailing List</name>
-            <subscribe>maven-glassfish-plugin-subscribe@ocean.net.au</subscribe>
-            <unsubscribe>maven-glassfish-plugin-unsubscribe@ocean.net.au</unsubscribe>
-            <post>maven-glassfish-plugin@ocean.net.au</post>
-            <archive>http://maven.ocean.net.au/modmbox/maven-glassfish-plugin/</archive>
+            <name>dev@maven-glassfish-plugin.dev.java.net</name>
+            <subscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=dev&amp;subtype=Normal&amp;Button=Subscribe</subscribe>
+            <unsubscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=dev&amp;subtype=Normal&amp;Button=Unsubscribe</unsubscribe>
+            <post>dev@maven-glassfish-plugin.dev.java.net</post>
+            <archive>https://maven-glassfish-plugin.dev.java.net/servlets/SummarizeList?listName=dev</archive>
+        </mailingList>
+        <mailingList>
+            <name>announce@maven-glassfish-plugin.dev.java.net</name>
+            <subscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=announce&amp;subtype=Normal&amp;Button=Subscribe</subscribe>
+            <unsubscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=announce&amp;subtype=Normal&amp;Button=Unsubscribe</unsubscribe>
+            <post>announce@maven-glassfish-plugin.dev.java.net</post>
+            <archive>https://maven-glassfish-plugin.dev.java.net/servlets/SummarizeList?listName=announce</archive>
+        </mailingList>
+        <mailingList>
+            <name>issues@maven-glassfish-plugin.dev.java.net</name>
+            <subscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=issues&amp;subtype=Normal&amp;Button=Subscribe</subscribe>
+            <unsubscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=issues&amp;subtype=Normal&amp;Button=Unsubscribe</unsubscribe>
+            <post>issues@maven-glassfish-plugin.dev.java.net</post>
+            <archive>https://maven-glassfish-plugin.dev.java.net/servlets/SummarizeList?listName=issues</archive>
+        </mailingList>
+        <mailingList>
+            <name>users@maven-glassfish-plugin.dev.java.net</name>
+            <subscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=users&amp;subtype=Normal&amp;Button=Subscribe</subscribe>
+            <unsubscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=users&amp;subtype=Normal&amp;Button=Unsubscribe</unsubscribe>
+            <post>users@maven-glassfish-plugin.dev.java.net</post>
+            <archive>https://maven-glassfish-plugin.dev.java.net/servlets/SummarizeList?listName=users</archive>
+        </mailingList>
+        <mailingList>
+            <name>commits@maven-glassfish-plugin.dev.java.net</name>
+            <subscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=commits&amp;subtype=Normal&amp;Button=Subscribe</subscribe>
+            <unsubscribe>https://maven-glassfish-plugin.dev.java.net/servlets/ProjectMailingListList?listName=commits&amp;subtype=Normal&amp;Button=Unsubscribe</unsubscribe>
+            <post>commits@maven-glassfish-plugin.dev.java.net</post>
+            <archive>https://maven-glassfish-plugin.dev.java.net/servlets/SummarizeList?listName=commits</archive>
         </mailingList>
     </mailingLists>
     <scm>
-        <connection>scm:svn:http://svn.ocean.net.au/maven-glassfish-plugin</connection>
-        <developerConnection>scm:svn:https://svn.ocean.net.au/maven-glassfish-plugin</developerConnection>
+        <connection>scm:svn:https://maven-glassfish-plugin.dev.java.net/svn/maven-glassfish-plugin</connection>
+        <developerConnection>scm:svn:https://maven-glassfish-plugin.dev.java.net/svn/maven-glassfish-plugin</developerConnection>
         <url>http://fisheye.ocean.net.au/browse/maven-glassfish-plugin</url>
     </scm>
 
