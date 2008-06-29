@@ -34,23 +34,28 @@ Maven Glassfish Plugin
 
 * Examples
 
-  The following complete example should provide enough information for you to make use of all the features of the Maven Glassfish Plugin.
-  If you find any errors, omissions or things you think require further explanation of clarification please drop us a line via the
-  appropriate mailing list or log a bug or feature request via our {{{http://jira.ocean.net.au/browse/MGP}Jira issue tracker}} kindly provided
-  free of charge by the guys at {{{http://www.atlassian.com/}Atlassian}}:
-
-
   * {{{examples/complete.html}A single example demonstrating the use of all currently available configuration options}}
 
-  * {{{examples/perform-release.html}Perform Release}}
+  * {{{examples/profiles.html}Using Maven profiles to provide alternate maven-glassfish-plugin mojo sequences in the default build}}
 
-  * {{{examples/prepare-release.html}Prepare Release}}
 
-  * {{{examples/generate-release-poms.html}Generate Release POMs}}
+* Contributors
 
-  * {{{examples/lock-files.html}Lock Files During Release}}
+  The quality and professionalism of this project are made possible by the generous contributions of the following vendors of software
+  development tools, who continue to support open-source software through the donation of free licences:
 
-  * {{{examples/run-goals-before-commit.html}Run Additional Goals Before Commit}}
+  * Atlassian, providers of
 
-  * {{{examples/branch.html}Create a branch}}
+    * {{{http://www.atlassian.com/software/jira}Atlassian JIRA}} issue tracking system
+
+    * {{{http://www.atlassian.com/software/crucible}Atlassian Crucible}} team code review system
+
+    * {{{http://www.atlassian.com/software/fisheye}Atlassian FishEye}} source code repository visualisation system
+
+
+  * JetBrains, providers of
+
+    * {{{http://www.jetbrains.com/idea/}IntelliJ IDEA}} Java IDE
+
+    * {{{http://www.jetbrains.com/teamcity/}TeamCity}} continuous integration system
 

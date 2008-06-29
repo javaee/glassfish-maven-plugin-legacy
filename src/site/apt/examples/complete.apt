@@ -1,0 +1,167 @@
+  ------
+  Usage
+  ------
+  Dave Whitla <dave.whitla@ocean.net.au>
+  ------
+  June 29, 2008
+
+
+<Fairly> Complete Configuration Example
+
+  The following example plugin configuration should provide enough information for you to make use of all the features of the Maven Glassfish Plugin.
+
+  Some configuration elements have mutually exclusive alternatives (<<<adminPassword>>> and <<<passFile>>> are one example).
+  Some other elements are non-exclusive alternatives which exist for flexibility's sake and to support backward compatibility with
+  Glassfish V1 (<<<resources>>> and <<<resourceDescriptor>>> are an example). The allowed values for each configuration property are
+  detailed on the {{{../usage.html}usage}} page;
+
+  If you find any errors, omissions or things you think require further explanation of clarification please drop us a line via the
+  appropriate mailing list or log a bug or feature request via our {{{http://jira.ocean.net.au/browse/MGP}JIRA issue tracker}} kindly provided
+  free of charge by the guys at {{{http://www.atlassian.com/}Atlassian}}:
+
+
+-------------------
+<project>
+    ...
+    <build>
+        ...
+        <plugins>
+            ...
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <glassfishDirectory>${glassfish.home}</glassfishDirectory>
+                    <user>${domain.username}</user>
+                    <adminPassword>${domain.password}</adminPassword>
+                    <!-- <passFile>path/to/asadmin/passfile</passFile> -->
+                    <autoCreate>true</autoCreate>
+                    <debug>true</debug>
+                    <echo>false</echo>
+                    <terse>true</terse>
+                    <skip>${test.int.skip}</skip>
+                    <domain>
+                        <name>${project.artifactId}</name>
+                        <adminPort>4848</adminPort>
+                        <httpPort>8080</httpPort>
+                        <httpsPort>8443</httpsPort>
+                        <iiopPort>3700</iiopPort>
+                        <jmsPort>7676</jmsPort>
+                        <reuse>false</reuse>
+                        <jvmOptions>
+                            <option>-Djava.security.auth.login.config=${project.build.testOutputDirectory}/login.conf</option>
+                        </jvmOptions>
+                        <properties>
+                            <property>
+                                <name>server.log-service.file</name>
+                                <value>${domain.log.dir}/server.log</value>
+                            </property>
+                        </properties>
+                        <auth>
+                            <realm>
+                                <name>testRealm</name>
+                                <className>com.sun.enterprise.security.auth.realm.file.FileRealm</className>
+                                <properties>
+                                    <property>
+                                        <name>jaas-context</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>file</name>
+                                        <value>${project.build.outputDirectory}/keyfile</value>
+                                    </property>
+                                </properties>
+                            </realm>
+                        </auth>
+                        <!-- <resourceDescriptor>path/to/resources.xml</resourceDescriptor> -->
+                        <resources>
+                            <connectionFactory>
+                                <jndiName>jms/testQueueConnectionFactory</jndiName>
+                                <type>queueConnectionFactory</type>
+                                <properties>
+                                    <property>
+                                        <name>UserName</name>
+                                        <value>guest</value>
+                                    </property>
+                                    <property>
+                                        <name>Password</name>
+                                        <value>guest</value>
+                                    </property>
+                                    <property>
+                                        <name>AddressList</name>
+                                        <value>localhost:7676</value>
+                                    </property>
+                                </properties>
+                            </connectionFactory>
+                            <jmsTopic>
+                                <jndiName>jms/testTopic</jndiName>
+                                <destinationName>TestTopic</destinationName>
+                                <connectionFactory>
+                                    <jndiName>jms/testTopicConnectionFactory</jndiName>
+                                    <properties>
+                                        <property>
+                                            <name>UserName</name>
+                                            <value>guest</value>
+                                        </property>
+                                        <property>
+                                            <name>Password</name>
+                                            <value>guest</value>
+                                        </property>
+                                        <property>
+                                            <name>AddressList</name>
+                                            <value>localhost:7676</value>
+                                        </property>
+                                    </properties>
+                                </connectionFactory>
+                            </jmsTopic>
+                            <jdbcDataSource>
+                                <name>SomeDS</name>
+                                <type>connectionPoolDataSource</type>
+                                <poolName>SomePool</poolName>
+                                <className>com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource</className>
+                                <description>Some JDBC Connection Pool</description>
+                                <allowNonComponentCallers>false</allowNonComponentCallers>
+                                <validateConnections>true</validateConnections>
+                                <validationMethod>metaData</validationMethod>
+                                <properties>
+                                    <property>
+                                        <name>portNumber</name>
+                                        <value>3306</value>
+                                    </property>
+                                    <property>
+                                        <name>password</name>
+                                        <value>somePassword</value>
+                                    </property>
+                                    <property>
+                                        <name>user</name>
+                                        <value>someUser</value>
+                                    </property>
+                                    <property>
+                                        <name>serverName</name>
+                                        <value>some.host.somewhere</value>
+                                    </property>
+                                    <property>
+                                        <name>databaseName</name>
+                                        <value>SomeDB</value>
+                                    </property>
+                                </properties>
+                            </jdbcDataSource>
+                        </resources>
+                    </domain>
+                    <components>
+                        <component>
+                            <name>${project.artifactId}</name>
+                            <artifact>${project.build.directory}/artifacts/${project.build.finalName}.war</artifact>
+                        </component>
+                    </components>
+                </configuration>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+    ...
+</project>
+-------------------
+
