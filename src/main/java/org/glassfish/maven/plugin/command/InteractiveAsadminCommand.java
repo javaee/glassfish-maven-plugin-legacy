@@ -58,7 +58,7 @@ public abstract class InteractiveAsadminCommand extends AsadminCommand {
         return new ArrayList<String>(Arrays.asList(
                 "--interactive=false",
                 "--user", sharedContext.getUser(),
-                "--passwordfile", sharedContext.getPassFile()
+                "--passwordfile", sharedContext.getPasswordFile()
         ));
     }
 }

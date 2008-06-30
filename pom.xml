@@ -316,12 +316,22 @@
             <name>Ocean Snapshot Repository</name>
             <url>dav:http://maven.ocean.net.au/snapshot</url>
         </snapshotRepository>
+        <!--<repository>-->
+            <!--<id>release.ocean.net.au</id>-->
+            <!--<name>Ocean Release Repository</name>-->
+            <!--<url>dav:http://maven.ocean.net.au/release</url>-->
+        <!--</repository>-->
         <repository>
             <uniqueVersion>false</uniqueVersion>
             <id>maven2.dev.java.net</id>
             <name>JavaNet Release Repository</name>
             <url>java-net:/maven2-repository/trunk/www/repository/</url>
         </repository>
+        <!--<site>-->
+            <!--<id>maven.ocean.net.au</id>-->
+            <!--<name>Ocean MavenPlugins Web Site</name>-->
+            <!--<url>dav:http://maven.ocean.net.au/plugin/glassfish</url>-->
+        <!--</site>-->
         <site>
             <id>maven-glassfish-plugin.dev.java.net</id>
             <url>java-net:/maven-glassfish-plugin/trunk/www/</url>
@@ -489,6 +499,18 @@
                             </extractors>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-xdoc-after-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>xdoc</goal>
+                        </goals>
+                        <configuration>
+                            <extractors>
+                                <extractor>annotation</extractor>
+                            </extractors>
+                        </configuration>
+                    </execution>
                 </executions>
                 <dependencies>
                     <dependency>
@@ -593,7 +615,23 @@
         </extensions>
 
     </build>
-    <!--<reporting></reporting>-->
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <requirements>
+                        <maven>2.0</maven>
+                        <jdk>5</jdk>
+                        <memory>No minimum requirement</memory>
+                        <diskSpace>No minimum requirement</diskSpace>
+                    </requirements>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
