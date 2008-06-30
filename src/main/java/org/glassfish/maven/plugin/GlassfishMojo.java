@@ -91,10 +91,13 @@ public abstract class GlassfishMojo extends OceanMojo {
     @Parameter(description = "The unprivileged user to run as", expression = "${user.name}")
     private String user;
 
-    @Parameter(description = "Location of the asadmin style password file (if you do not want to provide the password in your POM)")
+    @Parameter(
+            description = "Location of the asadmin style password file (if you do not want to provide the password in your POM)")
     private String passwordFile;
 
-    @Parameter(description = "The admin password to use for this domain (if you would rather not use an asadmin style password file)")
+    @Parameter(
+            description = "The admin password to use for this domain (if you would rather not use an asadmin style password file)"
+    )
     private String adminPassword;
 
     protected String getPrefix() {
