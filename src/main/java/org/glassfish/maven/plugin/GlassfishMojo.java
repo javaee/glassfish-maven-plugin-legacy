@@ -58,15 +58,16 @@ import java.util.List;
  */
 public abstract class GlassfishMojo extends OceanMojo {
     
-    @Parameter(description = "The directory into which domains are deployed (defaults to ${glassfishDirectory}/domains).")
+    @Parameter(description = "The directory into which domains are deployed", defaultValue = "${glassfishDirectory}/domains")
     protected File domainDirectory;
 
+    @Required
     @Parameter(description = "Container for domain configuration parameters.")
     protected Domain domain;
 
-    @Parameter(description = "Peer domain fixtures for testing a JEE component againts other existing remote JEE components " +
-            "which can be deployed remote domains, created during the automated build.")
-    protected List<Domain> testing;
+//    @Parameter(description = "Peer domain fixtures for testing a JEE component against other existing remote JEE components " +
+//            "which can be deployed remote domains, created during the automated build.")
+//    protected List<Domain> testing;
 
     @Required
     @Parameter(description = "The root directory of the Glassfish installation to be used", expression = "${glassfish.home}")
@@ -87,13 +88,16 @@ public abstract class GlassfishMojo extends OceanMojo {
     @Parameter(description = "Automatically create the domain if it does not already exist", defaultValue = "true")
     private boolean autoCreate;
 
-    @Parameter(description = "Glassfish user", expression = "${user.name}")
+    @Parameter(description = "The unprivileged user to run as", expression = "${user.name}")
     private String user;
 
-    @Parameter(description = "Location of the admin password file.")
-    private String passFile;
+    @Parameter(
+            description = "Location of the asadmin style password file (if you do not want to provide the password in your POM)")
+    private String passwordFile;
 
-    @Parameter(description = "The admin password to use for this domain.")
+    @Parameter(
+            description = "The admin password to use for this domain (if you would rather not use an asadmin style password file)"
+    )
     private String adminPassword;
 
     protected String getPrefix() {
@@ -172,12 +176,12 @@ public abstract class GlassfishMojo extends OceanMojo {
         this.adminPassword = adminPassword;
     }
 
-    public String getPassFile() {
-        return passFile;
+    public String getPasswordFile() {
+        return passwordFile;
     }
 
-    public void setPassFile(String passFile) {
-        this.passFile = passFile;
+    public void setPasswordFile(String passwordFile) {
+        this.passwordFile = passwordFile;
     }
 
     protected void postConfig() throws MojoConfigurationException {
@@ -190,7 +194,7 @@ public abstract class GlassfishMojo extends OceanMojo {
             try {
                 File tmpPassFile = File.createTempFile("mgfp", null);
                 tmpPassFile.deleteOnExit();
-                passFile = tmpPassFile.getAbsolutePath();
+                passwordFile = tmpPassFile.getAbsolutePath();
                 PrintWriter fileWriter = new PrintWriter(new FileWriter(tmpPassFile));
                 fileWriter.println("AS_ADMIN_PASSWORD=" + adminPassword);
                 fileWriter.println("AS_ADMIN_USERPASSWORD=" + adminPassword);
@@ -217,12 +221,12 @@ public abstract class GlassfishMojo extends OceanMojo {
         List<String> errors = new ArrayList<String>();
         // adminPort or basePort are required
         // passfile or adminPassword are required
-        if (adminPassword == null && passFile == null) {
+        if (adminPassword == null && passwordFile == null) {
             StringBuilder error = new StringBuilder()
                     .append("inside the definition for plugin: 'maven-glassfish-plugin' specify the following:\n\n")
                     .append("<configuration>\n")
                     .append("  ...\n")
-                    .append("  <passFile>VALUE</passFile>\n")
+                    .append("  <passwordFile>VALUE</passwordFile>\n")
                     .append("  ...\n")
                     .append("   OR\n")
                     .append("  ...\n")

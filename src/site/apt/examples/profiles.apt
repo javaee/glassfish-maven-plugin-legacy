@@ -1,0 +1,92 @@
+  ------
+  Usage
+  ------
+  Dave Whitla <dave.whitla@ocean.net.au>
+  ------
+  June 29, 2008
+
+
+Profiles
+
+  In this example when the <<<ci>>> profile is activated the domain will be created before, and deleted after the <<integration-test>> phase.
+  This is typically desireable in a continuous integration environment which will deploy many Glassfish domains over time for unrelated projects.
+
+  The <<<developer>>> profile, in contrast, will <<hot>> deploy upon each build run, shortening the code-build-test loop.  In this environment the
+  domain would only need recreation if its configuration changed. This is an infrequent occurrence and is handled by invoking the <<glassfish:create-domain>>
+  mojo directly.
+
+  IDEs with evolved Maven2 support, such as IntelliJ IDEA, make this trivial.
+
+
+-------------------
+<project>
+    ...
+    <profiles>
+        ...
+        <profile>
+            <id>developer</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>profile</name>
+                    <value>developer</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.glassfish.maven.plugin</groupId>
+                            <artifactId>maven-glassfish-plugin</artifactId>
+                            <version>2.0</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>deploy</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        ...
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>profile</name>
+                    <value>ci</value>
+                </property>
+            </activation>
+            <properties>
+                <as.domain.dir>/tmp</as.domain.dir>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.glassfish.maven.plugin</groupId>
+                            <artifactId>maven-glassfish-plugin</artifactId>
+                            <version>2.0</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>create-domain</goal>
+                                        <goal>deploy</goal>
+                                        <goal>delete-domain</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        ...
+    </profiles>
+    ...
+</project>
+-------------------

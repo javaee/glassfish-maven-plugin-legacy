@@ -8,7 +8,9 @@
 
 Maven Glassfish Plugin
 
-  The Maven Glassfish Plugin is a Maven2 plugin allowing management of Glassfish domains and component deployments from within the Maven build lifecycle. It encapsulates domain configuration and deployment attributes within the build configuration for a more rapid development integration loop and simplified management of continuous integration testing of components destined for deployment within the Glassfish V2 and later JavaEE containers.
+  The Maven Glassfish Plugin is a Maven2 plugin allowing management of Glassfish domains and component deployments from within the Maven build lifecycle.
+  It encapsulates domain configuration and deployment attributes within the build configuration for a more rapid development integration loop
+  and simplified management of continuous integration testing of components destined for deployment within the Glassfish V2 and later JavaEE containers.
 
 * Goals Overview
 
@@ -28,23 +30,32 @@ Maven Glassfish Plugin
 
 * Usage
 
-  Instructions on how to use the Maven Release Plugin can be found {{{usage.html}here}}.
+  Instructions on how to use the Maven Glassfish Plugin can be found {{{usage.html}here}}.
 
 * Examples
 
-  To provide you with better understanding on some usages of the Maven Release Plugin,
-  you can take a look into the following examples:
+  * {{{examples/complete.html}A single example demonstrating the use of all currently available configuration options}}
+
+  * {{{examples/profiles.html}Using Maven profiles to provide alternate maven-glassfish-plugin mojo sequences in the default build}}
 
 
-  * {{{examples/perform-release.html}Perform Release}}
+* Contributors
 
-  * {{{examples/prepare-release.html}Prepare Release}}
+  The quality and professionalism of this project are enhanced by the generous contributions of the following vendors of software
+  development tools, who continue to support open-source software through the donation of free licences:
 
-  * {{{examples/generate-release-poms.html}Generate Release POMs}}
+  * Atlassian, providers of
 
-  * {{{examples/lock-files.html}Lock Files During Release}}
+    * {{{http://www.atlassian.com/software/jira}Atlassian JIRA}} issue tracking system
 
-  * {{{examples/run-goals-before-commit.html}Run Additional Goals Before Commit}}
+    * {{{http://www.atlassian.com/software/crucible}Atlassian Crucible}} team code review system
 
-  * {{{examples/branch.html}Create a branch}}
+    * {{{http://www.atlassian.com/software/fisheye}Atlassian FishEye}} source code repository visualisation system
+
+
+  * JetBrains, providers of
+
+    * {{{http://www.jetbrains.com/idea/}IntelliJ IDEA}} Java IDE
+
+    * {{{http://www.jetbrains.com/teamcity/}TeamCity}} continuous integration system
 

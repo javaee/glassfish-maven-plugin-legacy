@@ -8,68 +8,66 @@
 
 Usage
 
-  The following are some common scenarios in preparing a release.
+    Released versions of this plugin are hosted in the {{{http://download.java.net/maven/2}java.net Maven2 Repository}}. To include the plugin in your project you must add the following to your POM:
 
-* Use a different username in the SCM server than the one in the operating system
+---------------------------------------------------------
+    <pluginRepositories>
+        ...
+        <pluginRepository>
+            <id>maven.java.net</id>
+            <name>Java.net Maven2 Repository</name>
+            <url>http://download.java.net/maven/2</url>
+        </pluginRepository>
+        ...
+    </pluginRepositories>
 
-  Most of the SCMs are simply executed as an external command as the current user on your system. If this username is
-  not the same as the remote username, you may need to set the following option:
+    <build>
+        ...
+        <plugins>
+            ...
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.0</version>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+---------------------------------------------------------
 
-------
-mvn -Dusername=your_username release:prepare
-------
+    Snapshots of the next development iteration are available (for those who live life on the edge) from the {{{http://maven.ocean.net.au/snapshot}Ocean Maven2 Snapshot Repository}}. The additions for your POM are:
 
-* Set where to tag the files in Subversion
+---------------------------------------------------------
+    <pluginRepositories>
+        ...
+        <pluginRepository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Snapshot Repository</name>
+            <url>http://maven.ocean.net.au/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        ...
+    </pluginRepositories>
 
-  This example shows how to set the repository location for all tags to be created in Subversion.
-  Note that it is not needed if you use the standard SVN layout, where the root project is in <<<trunk>>>, and
-  there is a <<<tags>>> directory immediately above it.
-
--------------------
-<project>
-  ...
-  <build>
-    ...
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <tagBase>https://svn.apache.org/repos/asf/maven/components/releases</tagBase>
-        </configuration>
-      </plugin>
-    </plugins>
-    ...
-  </build>
-  ...
-</project>
--------------------
-
-* Do a Dry Run
-
-  Since the release plugin performs a number of operations that change the project, it may be wise to do a dry run
-  before a big release or on a new project. To do this, commit all of your files as if you were about to run a full
-  release and run:
-
-------
-mvn release:prepare -DdryRun=true
-------
-
-  This will ask all the same questions, run the same tests, and output a copy of how the POMs will look after
-  transformation. You can check the output and review the POMs, then run:
-
-------
-mvn release:clean
-------
-
-  This will remove all of the files created above, and the project will be ready to execute the proper release.
-
-* Run in Batch Mode
-
-  Sometimes it is desirable to do the commit/tag process on a regular interval (e.g. to produce nightly or integration
-  builds through a build server). To use the default inputs for the versions and tag information and not prompt for any
-  values, use Maven's <<<--batch-mode>>> setting:
-
-------
-mvn --batch-mode release:prepare
-------
+    <build>
+        ...
+        <plugins>
+            ...
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.1-SNAPSHOT</version>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+---------------------------------------------------------
