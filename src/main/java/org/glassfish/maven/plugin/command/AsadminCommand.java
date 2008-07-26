@@ -75,8 +75,13 @@ public abstract class AsadminCommand {
 
     public void execute(ProcessBuilder processBuilder) throws MojoExecutionException {
         List<String> commandLine = new ArrayList<String>(getParameters());
+        File binDir = new File(sharedContext.getGlassfishDirectory(), "bin");
+        File asadmin = new File(binDir, "asadmin");
+        if (!asadmin.exists() && System.getProperty("os.name").contains("indows")) {
+            asadmin = new File(binDir, "asadmin.bat");
+        }
         commandLine.addAll(0, Arrays.asList(
-                sharedContext.getGlassfishDirectory().getAbsolutePath() + "/bin/asadmin",
+                asadmin.getAbsolutePath(),
                 getName(),
                 "--echo=" + sharedContext.isEcho(),
                 "--terse=" + sharedContext.isTerse()

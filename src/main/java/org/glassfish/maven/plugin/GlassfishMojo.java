@@ -58,7 +58,7 @@ import java.util.List;
  */
 public abstract class GlassfishMojo extends OceanMojo {
     
-    @Parameter(description = "The directory into which domains are deployed", defaultValue = "${glassfishDirectory}/domains")
+    @Parameter(description = "The directory into which domains are deployed. Default value is ${glassfishDirectory}/domains.")
     protected File domainDirectory;
 
     @Required
