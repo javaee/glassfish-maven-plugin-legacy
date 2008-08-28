@@ -79,13 +79,13 @@ public class CreateDomainMacro {
         new StopDomainCommand(sharedContext, domain).execute(processBuilder);
     }
 
-    private void createJVMOptions(ProcessBuilder processBuilder) throws MojoExecutionException {
+    private void createJVMOptions(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         if (domain.getJVMOptions() != null) {
             new CreateJVMOptionsCommand(sharedContext, domain).execute(processBuilder);
         }
     }
 
-    private void setProperties(ProcessBuilder processBuilder) throws MojoExecutionException {
+    private void setProperties(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         if (domain.getProperties() != null) {
             for (Property property : domain.getProperties()) {
                 new SetCommand(sharedContext, domain, property).execute(processBuilder);
@@ -93,7 +93,7 @@ public class CreateDomainMacro {
         }
     }
 
-    private void addResources(ProcessBuilder processBuilder) throws MojoExecutionException {
+    private void addResources(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         if (domain.getResourceDescriptor() != null) {
             new AddResourcesCommand(sharedContext, domain).execute(processBuilder);
         }
@@ -112,19 +112,19 @@ public class CreateDomainMacro {
     }
 
     private void createDataSource(ProcessBuilder processBuilder, JdbcDataSource jdbcDataSource)
-            throws MojoExecutionException {
+            throws MojoExecutionException, MojoFailureException {
         new CreateJDBCConnectionPoolCommand(sharedContext, domain, jdbcDataSource).execute(processBuilder);
         new CreateJDBCResourceCommand(sharedContext, domain, jdbcDataSource).execute(processBuilder);
     }
 
     private void createJMSDestination(ProcessBuilder processBuilder, JmsDestination jmsDestination)
-            throws MojoExecutionException {
+            throws MojoExecutionException, MojoFailureException {
         new CreateJMSResourceCommand(sharedContext, domain, jmsDestination.getConnectionFactory()).execute(processBuilder);
         new CreateJMSDestinationCommand(sharedContext, domain, jmsDestination.getDestination()).execute(processBuilder);
         new CreateJMSResourceCommand(sharedContext, domain, jmsDestination).execute(processBuilder);
     }
 
-    private void createAuth(ProcessBuilder processBuilder) throws MojoExecutionException {
+    private void createAuth(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         Auth auth = domain.getAuth();
         if (auth != null) {
             createAuthRealm(processBuilder, auth);
@@ -132,7 +132,7 @@ public class CreateDomainMacro {
         }
     }
 
-    private void createAuthRealm(ProcessBuilder processBuilder, Auth auth) throws MojoExecutionException {
+    private void createAuthRealm(ProcessBuilder processBuilder, Auth auth) throws MojoExecutionException, MojoFailureException {
         Realm realm = auth.getRealm();
         if (realm != null) {
             new CreateAuthRealmCommand(sharedContext, domain, realm).execute(processBuilder);
@@ -141,7 +141,8 @@ public class CreateDomainMacro {
         }
     }
 
-    private void setMessageSecurityProvider(ProcessBuilder processBuilder, Auth auth) throws MojoExecutionException {
+    private void setMessageSecurityProvider(ProcessBuilder processBuilder, Auth auth)
+            throws MojoExecutionException, MojoFailureException {
         MessageSecurityProvider securityProvider = auth.getMessageSecurityProvider();
         if (securityProvider != null) {
             new CreateMessageSecurityProviderCommand(sharedContext, domain, securityProvider).execute(processBuilder);

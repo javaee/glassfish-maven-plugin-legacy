@@ -36,10 +36,11 @@
 
 package org.glassfish.maven.plugin.command;
 
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 import org.glassfish.maven.plugin.GlassfishMojo;
 import org.glassfish.maven.plugin.Property;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.logging.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -69,11 +70,11 @@ public abstract class AsadminCommand {
         this.sharedContext = sharedContext;
     }
 
-    public void execute() throws MojoExecutionException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
         execute(new ProcessBuilder());
     }
 
-    public void execute(ProcessBuilder processBuilder) throws MojoExecutionException {
+    public void execute(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         List<String> commandLine = new ArrayList<String>(getParameters());
         File binDir = new File(sharedContext.getGlassfishDirectory(), "bin");
         File asadmin = new File(binDir, "asadmin");
@@ -113,7 +114,11 @@ public abstract class AsadminCommand {
                 while (errorReader.ready()) {
                     log.error(errorReader.readLine());
                 }
-                throw new MojoExecutionException(getErrorMessage() + " See above for details.");
+                String errorMessage = getErrorMessage();
+                log.error(errorMessage);
+                log.error("For more detail on what might be causing the problem try running maven with the --debug option ");
+                log.error("or setting the maven-glassfish-plugin \"echo\" property to \"true\".");
+                throw new MojoFailureException(errorMessage);
             }
         } catch (IOException e) {
             throw new MojoExecutionException(getErrorMessage() + " IOException: " + e.getMessage());
@@ -128,6 +133,9 @@ public abstract class AsadminCommand {
 
     protected String escape(String value, String chars, String escapeSequence) {
         String escaped = value;
+        if (escaped == null) {
+            return "";
+        }
         for (char ch : chars.toCharArray()) {
             escaped = escaped.replaceAll(String.valueOf(ch), escapeSequence + ch);
         }
