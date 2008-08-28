@@ -51,7 +51,9 @@ import org.apache.maven.plugin.MojoFailureException;
 @Mojo(
         goal = "stop-domain",
         description = "Stop a domain which is currently running in a local or remote Glassfish instance",
-        phase = PostIntegrationTest
+        phase = PostIntegrationTest,
+        requiresOnline = false,
+        requiresProject = false
 )
 public class StopDomainGlassfishMojo extends GlassfishMojo {
     

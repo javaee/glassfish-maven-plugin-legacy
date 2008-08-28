@@ -59,6 +59,35 @@
         <!--</developerConnection>-->
     <!--</scm>-->
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>release.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/release</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
 
         <resources>

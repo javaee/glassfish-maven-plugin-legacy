@@ -52,7 +52,9 @@ import org.apache.maven.plugin.MojoFailureException;
 @Mojo(
         goal = "delete-domain",
         phase = Phase.PostIntegrationTest,
-        description = "Delete an existing domain in a local or remote Glassfish instance"
+        description = "Delete an existing domain in a local or remote Glassfish instance",
+        requiresOnline = false,
+        requiresProject = false
 )
 public class DeleteDomainGlassfishMojo extends GlassfishMojo {
 

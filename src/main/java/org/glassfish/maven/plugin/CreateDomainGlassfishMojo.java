@@ -53,7 +53,9 @@ import org.apache.maven.plugin.logging.Log;
 @Mojo(
         goal = "create-domain",
         phase = PreIntegrationTest,
-        description = "Create a new domain in a local or remote Glassfish instance"
+        description = "Create a new domain in a local or remote Glassfish instance",
+        requiresOnline = false,
+        requiresProject = false
 )
 public class CreateDomainGlassfishMojo extends GlassfishMojo {
 

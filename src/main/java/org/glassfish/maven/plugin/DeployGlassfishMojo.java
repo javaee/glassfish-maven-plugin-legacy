@@ -51,7 +51,9 @@ import org.apache.maven.plugin.MojoFailureException;
 @Mojo(
         goal = "deploy",
         phase = Phase.PreIntegrationTest,
-        description = "Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance"
+        description = "Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance",
+        requiresOnline = false,
+        requiresProject = false
 )
 public class DeployGlassfishMojo extends DeploymentGlassfishMojo {
 

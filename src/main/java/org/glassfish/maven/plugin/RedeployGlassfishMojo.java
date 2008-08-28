@@ -49,8 +49,10 @@ import org.apache.maven.plugin.MojoFailureException;
  * @version $Id: RedeployGlassfishMojo.java 0 Apr 3, 2007 8:22:59 AM dwhitla $
  */
 @Mojo(
-    goal = "redeploy",
-    description = "\"Hot\" redeploy JavaEE components to a domain in a local or remote Glassfish instance"
+        goal = "redeploy",
+        description = "\"Hot\" redeploy JavaEE components to a domain in a local or remote Glassfish instance",
+        requiresOnline = false,
+        requiresProject = false
 )
 public class RedeployGlassfishMojo extends DeploymentGlassfishMojo {
 

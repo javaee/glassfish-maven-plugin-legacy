@@ -318,7 +318,6 @@
                         <plugin>
                             <groupId>org.glassfish.maven.plugin</groupId>
                             <artifactId>maven-glassfish-plugin</artifactId>
-                            <version>1.0-SNAPSHOT</version>
                             <executions>
                                 <execution>
                                     <goals>
@@ -348,7 +347,6 @@
                         <plugin>
                             <groupId>org.glassfish.maven.plugin</groupId>
                             <artifactId>maven-glassfish-plugin</artifactId>
-                            <version>1.0-SNAPSHOT</version>
                             <executions>
                                 <execution>
                                     <goals>

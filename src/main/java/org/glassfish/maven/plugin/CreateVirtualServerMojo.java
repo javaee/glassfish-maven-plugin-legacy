@@ -51,7 +51,9 @@ import org.apache.maven.plugin.logging.Log;
  */
 @Mojo(
         goal = "create-virtual-server",
-        description = "Create a new virtual server in a local or remote Glassfish instance"
+        description = "Create a new virtual server in a local or remote Glassfish instance",
+        requiresOnline = false,
+        requiresProject = false
 )
 public class CreateVirtualServerMojo extends GlassfishMojo {
 

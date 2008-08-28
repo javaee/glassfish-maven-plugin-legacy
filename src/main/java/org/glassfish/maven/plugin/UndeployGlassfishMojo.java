@@ -54,7 +54,9 @@ import org.apache.maven.plugin.MojoFailureException;
         goal = "undeploy",
         description =
                 "Undeploy JavaEE components which are currently deployed to a domain in a local or remote Glassfish instance",
-        phase = PostIntegrationTest
+        phase = PostIntegrationTest,
+        requiresOnline = false,
+        requiresProject = false
 )
 public class UndeployGlassfishMojo extends DeploymentGlassfishMojo {
 

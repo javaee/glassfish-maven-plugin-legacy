@@ -207,6 +207,7 @@ public abstract class GlassfishMojo extends OceanMojo {
                                 + System.getProperty("java.io.tmpdir")));
             }
         }
+        // todo: this should be left to asadmin to decide
         if (domainDirectory == null) {
             domainDirectory = new File(glassfishDirectory, "domains");
         }

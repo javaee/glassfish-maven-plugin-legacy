@@ -50,7 +50,9 @@ import org.apache.maven.plugin.MojoFailureException;
 @Mojo (
         goal = "start-domain",
         description = "Start an existing domain in a local or remote Glassfish instance",
-        phase = PreIntegrationTest
+        phase = PreIntegrationTest,
+        requiresOnline = false,
+        requiresProject = false
 )
 public class StartDomainGlassfishMojo extends GlassfishMojo {
 
