@@ -1,9 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~
-      ~~ Project Information ~~
-      ~~~~~~~~~~~~~~~~~~~~~~~-->
+    <groupId>org.glassfish.maven.plugin</groupId>
+    <artifactId>maven-glassfish-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>2.1-SNAPSHOT</version>
     <name>Maven Glassfish Plugin</name>
     <description>
         The Glassfish Maven Plugin is a Maven2 plugin allowing management of Glassfish domains and component deployments
@@ -13,6 +14,7 @@
     </description>
     <url>http://maven-glassfish-plugin.dev.java.net/</url>
     <inceptionYear>2007</inceptionYear>
+
     <licenses>
         <license>
             <name>The Common Development and Distribution Licence version 1.0 (CDDL)</name>
@@ -23,6 +25,7 @@
             <url>https://glassfish.dev.java.net/public/CDDL+GPL.html</url>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <id>dwhitla</id>
@@ -35,60 +38,18 @@
             <timezone>+10</timezone>
         </developer>
     </developers>
-    <contributors />
-    <!--<organization></organization>-->
 
+    <scm>
+        <connection>scm:svn:https://maven-glassfish-plugin.dev.java.net/svn/maven-glassfish-plugin/trunk</connection>
+        <developerConnection>scm:svn:https://maven-glassfish-plugin.dev.java.net/svn/maven-glassfish-plugin/trunk</developerConnection>
+        <url>http://fisheye.ocean.net.au/browse/maven-glassfish-plugin</url>
+    </scm>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~
-      ~~ POM Relationships ~~
-      ~~~~~~~~~~~~~~~~~~~~~-->
-    <groupId>org.glassfish.maven.plugin</groupId>
-    <artifactId>maven-glassfish-plugin</artifactId>
-    <version>2.1-SNAPSHOT</version>
-
-    <!--<dependencyManagement></dependencyManagement>-->
-    <dependencies>
-        <dependency>
-            <groupId>au.net.ocean.maven.plugin</groupId>
-            <artifactId>maven-plugin-tools</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-project</artifactId>
-            <version>2.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>2.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-model</artifactId>
-            <version>2.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.shared</groupId>
-            <artifactId>maven-plugin-testing-harness</artifactId>
-            <version>1.0-beta-1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    <!--<modules></modules>-->
-
-
-    <!--~~~~~~~~~~~~~~~~~~~~~
-      ~~ Build Environment ~~
-      ~~~~~~~~~~~~~~~~~~~~~-->
     <issueManagement>
         <system>Jira</system>
         <url>http://jira.ocean.net.au/browse/MGP</url>
     </issueManagement>
+
     <ciManagement>
         <system>TeamCity</system>
         <url>http://teamcity.ocean.net.au/viewType.html?buildTypeId=bt7</url>
@@ -115,6 +76,7 @@
             </notifier>
         </notifiers>
     </ciManagement>
+
     <mailingLists>
         <mailingList>
             <name>dev@maven-glassfish-plugin.dev.java.net</name>
@@ -152,30 +114,36 @@
             <archive>https://maven-glassfish-plugin.dev.java.net/servlets/SummarizeList?listName=commits</archive>
         </mailingList>
     </mailingLists>
-    <scm>
-        <connection>scm:svn:https://maven-glassfish-plugin.dev.java.net/svn/maven-glassfish-plugin</connection>
-        <developerConnection>scm:svn:https://maven-glassfish-plugin.dev.java.net/svn/maven-glassfish-plugin</developerConnection>
-        <url>http://fisheye.ocean.net.au/browse/maven-glassfish-plugin</url>
-    </scm>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~
-      ~~ Maven Environment ~~
-      ~~~~~~~~~~~~~~~~~~~~~-->
-    <!--<prerequisites></prerequisites>-->
-    <repositories>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Snapshot Repository</name>
+            <url>dav:http://maven.ocean.net.au/snapshot</url>
+        </snapshotRepository>
+        <!--<repository>-->
+        <!--<id>release.ocean.net.au</id>-->
+        <!--<name>Ocean Release Repository</name>-->
+        <!--<url>dav:http://maven.ocean.net.au/release</url>-->
+        <!--</repository>-->
         <repository>
-            <id>external.ocean.net.au</id>
-            <name>Ocean External Repository</name>
-            <url>http://maven.ocean.net.au/external</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
+            <uniqueVersion>false</uniqueVersion>
+            <id>maven2.dev.java.net</id>
+            <name>JavaNet Release Repository</name>
+            <url>java-net:/maven2-repository/trunk/www/repository/</url>
         </repository>
+        <!--<site>-->
+        <!--<id>maven.ocean.net.au</id>-->
+        <!--<name>Ocean MavenPlugins Web Site</name>-->
+        <!--<url>dav:http://maven.ocean.net.au/plugin/glassfish</url>-->
+        <!--</site>-->
+        <site>
+            <id>maven-glassfish-plugin.dev.java.net</id>
+            <url>java-net:/maven-glassfish-plugin/trunk/www/</url>
+        </site>
+    </distributionManagement>
+
+    <repositories>
         <repository>
             <id>release.ocean.net.au</id>
             <name>Ocean Release Repository</name>
@@ -190,6 +158,19 @@
             </snapshots>
         </repository>
         <repository>
+            <id>external.ocean.net.au</id>
+            <name>Ocean External Repository</name>
+            <url>http://maven.ocean.net.au/external</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>snapshot.ocean.net.au</id>
             <name>Ocean Release Repository</name>
             <url>http://maven.ocean.net.au/snapshot</url>
@@ -200,19 +181,6 @@
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>maven1.dev.java.net</id>
-            <url>http://download.java.net/maven/1</url>
-            <layout>legacy</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
         <repository>
@@ -233,9 +201,9 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>external.ocean.net.au</id>
+            <id>release.ocean.net.au</id>
             <name>Ocean Release Repository</name>
-            <url>http://maven.ocean.net.au/external</url>
+            <url>http://maven.ocean.net.au/release</url>
             <releases>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
@@ -246,9 +214,9 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>release.ocean.net.au</id>
+            <id>external.ocean.net.au</id>
             <name>Ocean Release Repository</name>
-            <url>http://maven.ocean.net.au/release</url>
+            <url>http://maven.ocean.net.au/external</url>
             <releases>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
@@ -272,100 +240,40 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>snapshot.ocean.net.au</id>
-            <name>Ocean Snapshot Repository</name>
-            <url>dav:http://maven.ocean.net.au/snapshot</url>
-        </snapshotRepository>
-        <!--<repository>-->
-            <!--<id>release.ocean.net.au</id>-->
-            <!--<name>Ocean Release Repository</name>-->
-            <!--<url>dav:http://maven.ocean.net.au/release</url>-->
-        <!--</repository>-->
-        <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>maven2.dev.java.net</id>
-            <name>JavaNet Release Repository</name>
-            <url>java-net:/maven2-repository/trunk/www/repository/</url>
-        </repository>
-        <!--<site>-->
-            <!--<id>maven.ocean.net.au</id>-->
-            <!--<name>Ocean MavenPlugins Web Site</name>-->
-            <!--<url>dav:http://maven.ocean.net.au/plugin/glassfish</url>-->
-        <!--</site>-->
-        <site>
-            <id>maven-glassfish-plugin.dev.java.net</id>
-            <url>java-net:/maven-glassfish-plugin/trunk/www/</url>
-        </site>
-    </distributionManagement>
-    <profiles>
-        <profile>
-            <id>ci</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>profile</name>
-                    <value>ci</value>
-                </property>
-            </activation>
-            <properties>
-                <as.domain.dir>/tmp</as.domain.dir>
-            </properties>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.glassfish.maven.plugin</groupId>
-                            <artifactId>maven-glassfish-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>createDomain</goal>
-                                        <goal>deploy</goal>
-                                        <goal>deleteDomain</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        <profile>
-            <id>developer</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>profile</name>
-                    <value>developer</value>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.glassfish.maven.plugin</groupId>
-                            <artifactId>maven-glassfish-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>deploy</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-    </profiles>
 
+    <dependencies>
+        <dependency>
+            <groupId>au.net.ocean.maven.plugin</groupId>
+            <artifactId>maven-plugin</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>au.net.ocean.maven.plugin</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>[2.0,)</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>[2.0,)</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-artifact</artifactId>
+            <version>[2.0,)</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-    <!--~~~~~~~~~~~~~~~~~~
-      ~~ Build Settings ~~
-      ~~~~~~~~~~~~~~~~~~-->
-    <packaging>maven-plugin</packaging>
     <properties>
         <licence>CDDL+GPLv2</licence>
         <build.number>${user.name}</build.number>
@@ -412,7 +320,7 @@
                     <enableRulesSummary>false</enableRulesSummary>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>false</failsOnError>
-                    <failsOnViolation>true</failsOnViolation>
+                    <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
                 <executions>
@@ -442,6 +350,7 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
+                    <goalPrefix>glassfish</goalPrefix>
                     <extractors>
                         <extractor />
                     </extractors>
@@ -476,7 +385,7 @@
                     <dependency>
                         <groupId>au.net.ocean.maven.plugin</groupId>
                         <artifactId>maven-plugin-tools</artifactId>
-                        <version>1.0</version>
+                        <version>1.2</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -573,7 +482,6 @@
                 <version>1.8</version>
             </extension>
         </extensions>
-
     </build>
 
     <reporting>
@@ -581,7 +489,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.4.3</version>
                 <configuration>
                     <requirements>
                         <maven>2.0</maven>

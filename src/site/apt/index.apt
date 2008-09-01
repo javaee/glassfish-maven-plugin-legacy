@@ -3,7 +3,7 @@
   ------
   Dave Whitla <dave.whitla@ocean.net.au>
   ------
-  March 25, 2008
+  September 1, 2008
 
 
 Maven Glassfish Plugin
@@ -14,13 +14,13 @@ Maven Glassfish Plugin
 
 * Goals Overview
 
-  * {{{create-domain-mojo.html}glassfish:create-domain}} Create a new Glassfish domain.
+  * {{{create-domain-mojo.html}glassfish:create-domain}} Create a new Glassfish domain. (Creating an existing domain will cause it to be deleted and recreated.)
 
-  * {{{start-domain-mojo.html}glassfish:start-domain}} Start an existing Glassfish domain.
+  * {{{start-domain-mojo.html}glassfish:start-domain}} Start an existing Glassfish domain. (Starting a non-existent domain will cause it to be created.)
 
-  * {{{deploy-mojo.html}glassfish:deploy}} Deploy JavaEE artifacts to a running domain.
+  * {{{deploy-mojo.html}glassfish:deploy}} Deploy JavaEE artifacts to a running domain. (Deploying to an inactive domain will cause it to be started and created if necessary.)
 
-  * {{{redeploy-mojo.html}glassfish:redeploy}} Redeploy JavaEE artifacts to a running domain.
+  * {{{redeploy-mojo.html}glassfish:redeploy}} Redeploy JavaEE artifacts to a running domain. (<<Cold>> redeployment by first calling <<<undeploy>>> and then <<<deploy>>>. Use <<<deploy>>> to effect a <<hot>> deployment.)
 
   * {{{undeploy-mojo.html}glassfish:undeploy}} Undeploy JavaEE components from a running domain.
 
@@ -31,12 +31,13 @@ Maven Glassfish Plugin
 * Usage
 
   Instructions on how to use the Maven Glassfish Plugin can be found {{{usage.html}here}}.
+  Intelligent IDEs, such as Intellij IDEA 8 also provide Maven plugin configuration autocompletion.
 
 * Examples
 
   * {{{examples/complete.html}A single example demonstrating the use of all currently available configuration options}}
 
-  * {{{examples/profiles.html}Using Maven profiles to provide alternate maven-glassfish-plugin mojo sequences in the default build}}
+  * {{{examples/profiles.html}Using Maven profiles to provide alternate maven-glassfish-plugin mojo sequences in the default build, and to enable per-user configurations.}}
 
 
 * Contributors

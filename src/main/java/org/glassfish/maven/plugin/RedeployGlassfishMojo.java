@@ -51,14 +51,13 @@ import org.apache.maven.plugin.MojoFailureException;
 @Mojo(
         goal = "redeploy",
         description = "\"Hot\" redeploy JavaEE components to a domain in a local or remote Glassfish instance",
-        requiresOnline = false,
-        requiresProject = false
+        requiresProject = true
 )
 public class RedeployGlassfishMojo extends DeploymentGlassfishMojo {
 
     public void doExecute() throws MojoExecutionException, MojoFailureException {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        for (Component component : components) {
+        for (Component component : getComponents()) {
             new UndeployCommand(this, domain, component).execute(processBuilder);
             new DeployCommand(this, domain, component).execute(processBuilder);
         }

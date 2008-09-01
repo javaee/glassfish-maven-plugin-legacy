@@ -36,11 +36,11 @@
 
 package org.glassfish.maven.plugin;
 
-import org.glassfish.maven.plugin.command.DeployCommand;
 import au.net.ocean.maven.plugin.annotation.Mojo;
 import au.net.ocean.maven.plugin.annotation.Phase;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.glassfish.maven.plugin.command.DeployCommand;
 
 /**
  * Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance
@@ -52,8 +52,7 @@ import org.apache.maven.plugin.MojoFailureException;
         goal = "deploy",
         phase = Phase.PreIntegrationTest,
         description = "Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance",
-        requiresOnline = false,
-        requiresProject = false
+        requiresProject = true
 )
 public class DeployGlassfishMojo extends DeploymentGlassfishMojo {
 
@@ -63,7 +62,7 @@ public class DeployGlassfishMojo extends DeploymentGlassfishMojo {
             getLog().info("Domain " + domain.getName() + " isn't started. Starting it for you.");
             new StartDomainMacro(this, domain).execute(processBuilder);
         }
-        for (Component component : components) {
+        for (Component component : getComponents()) {
             new DeployCommand(this, domain, component).execute(processBuilder);
         }
     }

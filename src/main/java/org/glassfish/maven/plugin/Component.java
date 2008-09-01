@@ -49,13 +49,20 @@ import java.io.File;
  */
 public class Component {
 
-    @Parameter(expression = "${artifactId}")
+    @Parameter(expression = "${project.artifactId}")
     private String name;
 
     @Parameter
     @Required
     private File artifact;
 
+    public Component() {
+    }
+
+    public Component(String name, File artifact) {
+        this.name = name;
+        this.artifact = artifact;
+    }
 
     public String getName() {
         return name;

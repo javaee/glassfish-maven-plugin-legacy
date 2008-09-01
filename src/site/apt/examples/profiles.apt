@@ -3,7 +3,7 @@
   ------
   Dave Whitla <dave.whitla@ocean.net.au>
   ------
-  June 29, 2008
+  September 1, 2008
 
 
 Profiles
@@ -38,7 +38,6 @@ Profiles
                         <plugin>
                             <groupId>org.glassfish.maven.plugin</groupId>
                             <artifactId>maven-glassfish-plugin</artifactId>
-                            <version>2.0</version>
                             <executions>
                                 <execution>
                                     <goals>
@@ -70,7 +69,6 @@ Profiles
                         <plugin>
                             <groupId>org.glassfish.maven.plugin</groupId>
                             <artifactId>maven-glassfish-plugin</artifactId>
-                            <version>2.0</version>
                             <executions>
                                 <execution>
                                     <goals>
@@ -90,3 +88,107 @@ Profiles
     ...
 </project>
 -------------------
+
+Per-User Settings
+
+You may also find it convenient to use a combination of <<settings.xml>> and <<profiles.xml>> configuration to supply plugin parameters which are necessarily different for each developer on your project.
+An obvious example is the <<${glassfishDirectory}>> plugin parameter, which may be set using the expression <<${glassfish.home}>>.
+
+I prefer not to set this in the POM, but rather to add something like the following to my <<~/.m2/settings.xml>> file:
+-------------------
+<settings
+        xmlns="http://maven.apache.org/Settings/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/Settings/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <profiles>
+
+        ...
+
+        <profile>
+            <id>glassfishV2</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>glassfish.version</name>
+                    <value>2</value>
+                </property>
+            </activation>
+            <properties>
+                <glassfish.home>/Users/dwhitla/Applications/Dev/glassfish/v2</glassfish.home>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>glassfishV3</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>glassfish.version</name>
+                    <value>3</value>
+                </property>
+            </activation>
+            <properties>
+                <glassfish.home>/Users/dwhitla/Applications/Dev/glassfish/v3</glassfish.home>
+            </properties>
+        </profile>
+
+        ...
+
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>glassfishV2</activeProfile>
+    </activeProfiles>
+
+    ...
+
+</settings>
+-------------------
+
+Any of the plugin parameters which declare an <<expression>> may be set in this way, via a profile property, via a POM property or via a Java -D property. The defautl expression for a plugin parameter according to the Maven plugin developer documentation is the name of the parameter, but my experience with relying upon this has not been favourable.
+
+Another technique which I find useful is to enable an empty profile by default in settings.xml, for example:
+-------------------
+        <profile>
+            <id>dwhitla</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+-------------------
+
+and create a profiles.xml, in the Maven modules I want to provide customised configuration for, in which I declare a profile with the same name:
+-------------------
+<profiles>
+    <!--
+    there are basically two options here. You can either:
+     * create a profile with an arbitrary name (eg: dwhitla) and
+     activate it explicitly (eg: mvn -Pdwhitla clean package) wherein
+     you need only override those properties or build settings which
+     you want to change from the sum of default build and active POM profiles.
+     You can also have this profile invoked automatically by adding a profile with
+     the same name in your ~/.m2/settings.xml file with activeByDefault set to true; or
+
+     * create a profile with the same name as an active POM profile (eg: developer)
+     overriding those properties you wish to change AND COPYING ALL PROPERTIES YOU
+     DON'T WANT TO OVERRIDE.
+    -->
+    <profile>
+        <id>dwhitla</id>
+        <properties>
+            <glassfish.home>/Users/dwhitla/Applications/Dev/glassfish/v2</glassfish.home>
+            <glassfish.adminUser>dwhitla</glassfish.adminUser>
+            <glassfish.adminPassword>password</glassfish.adminPassword>
+            <glassfish.echo>false</glassfish.echo>
+            <glassfish.terse>true</glassfish.terse>
+            <glassfish.debug>false</glassfish.debug>
+
+            <database.password>asdfasdf</database.password>
+        </properties>
+    </profile>
+</profiles>
+-------------------
+
+As you typically want to specify sensitive property values, such as passwords, in these profiles it is generally a good idea to exclude them from your revision control system - even more so if you are working on an open-source project.
+
+A point to note regarding profiles however, is that if you override a POM defined profile with one in profiles.xml (by declaring them with the same id), any properties in the overridden POM profile which are not explicitly set in the profiles.xml definition will not be set in the execution of your Maven build.

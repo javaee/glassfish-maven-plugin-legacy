@@ -88,6 +88,10 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <properties>
+        <glassfishDirectory>asdf</glassfishDirectory>
+    </properties>
+    
     <build>
 
         <resources>
@@ -118,12 +122,11 @@
                 <artifactId>maven-glassfish-plugin</artifactId>
                 <version>2.1-SNAPSHOT</version>
                 <configuration>
-                    <glassfishDirectory>${as.home}</glassfishDirectory>
                     <adminPassword>password</adminPassword>
                     <autoCreate>true</autoCreate>
                     <debug>false</debug>
                     <echo>true</echo>
-                    <terse>true</terse>
+                    <terse>false</terse>
                     <skip>${test.int.skip}</skip>
                     <domain>
                         <name>${project.artifactId}</name>
@@ -238,13 +241,16 @@
                             </jdbcDataSource>
                         </resources>
                     </domain>
-                    <components>
-                        <component>
-                            <name>${artifactId}</name>
-                            <artifact>${project.build.directory}/artifacts/${project.build.finalName}.war</artifact>
-                        </component>
-                    </components>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create-domain</goal>
+                            <goal>deploy</goal>
+                            <goal>delete-domain</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

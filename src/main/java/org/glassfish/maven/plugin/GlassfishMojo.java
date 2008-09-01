@@ -88,7 +88,11 @@ public abstract class GlassfishMojo extends OceanMojo {
     @Parameter(description = "Automatically create the domain if it does not already exist", defaultValue = "true")
     private boolean autoCreate;
 
-    @Parameter(description = "The unprivileged user to run as", expression = "${user.name}")
+    @Parameter(
+            description = "The asadmin user to create for domain administration.",
+            expression = "${glassfish.adminUser}",
+            defaultValue = "${user.name}"
+            )
     private String user;
 
     @Parameter(
@@ -96,7 +100,9 @@ public abstract class GlassfishMojo extends OceanMojo {
     private String passwordFile;
 
     @Parameter(
-            description = "The admin password to use for this domain (if you would rather not use an asadmin style password file)"
+            description = "The admin password to use for this domain " +
+                   "(if you would rather not use an asadmin style password file)",
+            expression = "${glassfish.adminPassword}"
     )
     private String adminPassword;
 

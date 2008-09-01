@@ -52,8 +52,8 @@ public abstract class DeploymentGlassfishMojo extends GlassfishMojo {
     /**
      * todo: Default to the pom artifact
      */
-    @Parameter(description = "The set of components we are publishing")
     @Required
+    @Parameter(description = "The set of components we are publishing.")
     protected List<Component> components;
 
 
