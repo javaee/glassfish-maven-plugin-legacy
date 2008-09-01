@@ -91,10 +91,10 @@ Profiles
 
 Per-User Settings
 
-You may also find it convenient to use a combination of <<settings.xml>> and <<profiles.xml>> configuration to supply plugin parameters which are necessarily different for each developer on your project.
-An obvious example is the <<${glassfishDirectory}>> plugin parameter, which may be set using the expression <<${glassfish.home}>>.
+  You may also find it convenient to use a combination of <<settings.xml>> and <<profiles.xml>> configuration to supply plugin parameters which are necessarily different for each developer on your project.
+  An obvious example is the <<glassfishDirectory>> plugin parameter, which may be set using the expression <<${glassfish.home}>>.
 
-I prefer not to set this in the POM, but rather to add something like the following to my <<~/.m2/settings.xml>> file:
+  I prefer not to set this in the POM, but rather to add something like the following to my <<~/.m2/settings.xml>> file:
 -------------------
 <settings
         xmlns="http://maven.apache.org/Settings/1.0.0"
@@ -145,19 +145,19 @@ I prefer not to set this in the POM, but rather to add something like the follow
 </settings>
 -------------------
 
-Any of the plugin parameters which declare an <<expression>> may be set in this way, via a profile property, via a POM property or via a Java -D property. The defautl expression for a plugin parameter according to the Maven plugin developer documentation is the name of the parameter, but my experience with relying upon this has not been favourable.
+  Any of the plugin parameters which declare an <<expression>> may be set in this way, via a profile property, via a POM property or via a Java -D property. The defautl expression for a plugin parameter according to the Maven plugin developer documentation is the name of the parameter, but my experience with relying upon this has not been favourable.
 
-Another technique which I find useful is to enable an empty profile by default in settings.xml, for example:
+  Another technique which I find useful is to enable an empty profile by default in settings.xml, for example:
 -------------------
-        <profile>
-            <id>dwhitla</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
+<profile>
+    <id>dwhitla</id>
+    <activation>
+        <activeByDefault>true</activeByDefault>
+    </activation>
+</profile>
 -------------------
 
-and create a profiles.xml, in the Maven modules I want to provide customised configuration for, in which I declare a profile with the same name:
+  and create a profiles.xml, in the Maven modules I want to provide customised configuration for, in which I declare a profile with the same name:
 -------------------
 <profiles>
     <!--
@@ -189,6 +189,6 @@ and create a profiles.xml, in the Maven modules I want to provide customised con
 </profiles>
 -------------------
 
-As you typically want to specify sensitive property values, such as passwords, in these profiles it is generally a good idea to exclude them from your revision control system - even more so if you are working on an open-source project.
+  As you typically want to specify sensitive property values, such as passwords, in these profiles it is generally a good idea to exclude them from your revision control system - even more so if you are working on an open-source project.
 
-A point to note regarding profiles however, is that if you override a POM defined profile with one in profiles.xml (by declaring them with the same id), any properties in the overridden POM profile which are not explicitly set in the profiles.xml definition will not be set in the execution of your Maven build.
+  A point to note regarding profiles however, is that if you override a POM defined profile with one in profiles.xml (by declaring them with the same id), any properties in the overridden POM profile which are not explicitly set in the profiles.xml definition will not be set in the execution of your Maven build.
