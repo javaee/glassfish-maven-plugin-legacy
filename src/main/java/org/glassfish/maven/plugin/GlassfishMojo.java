@@ -82,9 +82,6 @@ public abstract class GlassfishMojo extends OceanMojo {
     @Parameter(description = "Terse Glassfish output", defaultValue = "true")
     private boolean terse = true;
 
-    @Parameter(description = "Skip execution", defaultValue = "false")
-    private boolean skip;
-
     @Parameter(description = "Automatically create the domain if it does not already exist", defaultValue = "true")
     private boolean autoCreate;
 
@@ -156,14 +153,6 @@ public abstract class GlassfishMojo extends OceanMojo {
 
     public void setTerse(boolean terse) {
         this.terse = terse;
-    }
-
-    public boolean isSkip() {
-        return skip;
-    }
-
-    public void setSkip(boolean skip) {
-        this.skip = skip;
     }
 
     public String getUser() {

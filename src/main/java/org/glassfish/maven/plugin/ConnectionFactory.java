@@ -46,7 +46,7 @@ import au.net.ocean.maven.plugin.annotation.Parameter;
  */
 public class ConnectionFactory extends JmsResource {
 
-    @Parameter(property = "factoryType")
+    @Parameter(property = "factoryType", defaultValue = "connectionFactory")
     private Type type;
 
     public Type getType() {
