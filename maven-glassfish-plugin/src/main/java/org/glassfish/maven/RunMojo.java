@@ -43,19 +43,19 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.model.Resource;
-import org.glassfish.embed.GFApplication;
-import org.glassfish.embed.GlassFish;
+import org.glassfish.embed.Application;
 import org.glassfish.embed.ScatteredWar;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.glassfish.embed.EmbeddedInfo;
+import org.glassfish.embed.Server;
 
 /**
  * Executes GlassFish v3 inside the current Maven and deploys the application being developed.
@@ -102,34 +102,33 @@ public class RunMojo extends AbstractMojo {
     protected int httpPort = 8080;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        GlassFish glassfish = new GlassFish(httpPort);
-
-        List<URL> classpath = new ArrayList<URL>();
-
         try {
-            for( Artifact a : (Set<Artifact>)project.getArtifacts() ) {
+            EmbeddedInfo info = new EmbeddedInfo();
+            info.setHttpPort(httpPort);
+            Server glassfish = new Server(info);
+            glassfish.start();
+
+            List<URL> classpath = new ArrayList<URL>();
+
+            for (Artifact a : (Set<Artifact>) project.getArtifacts()) {
                 classpath.add(a.getFile().toURI().toURL());
             }
             // resources, so that changes take effect in real time
-            for (Resource res : (List<Resource>)project.getBuild().getResources()) {
+            for (Resource res : (List<Resource>) project.getBuild().getResources()) {
                 classpath.add(new File(res.getDirectory()).toURI().toURL());
             }
             // main artifacts
             classpath.add(new File(project.getBuild().getOutputDirectory()).toURI().toURL());
-        } catch (MalformedURLException e) {
-            throw new MojoExecutionException("Failed to convert to URL",e);
-        }
 
-        ScatteredWar war = new ScatteredWar(
-            project.getArtifactId(),
-            resourcesDirectory,
-            webXml,
-            classpath
-        );
+            ScatteredWar war = new ScatteredWar(
+                project.getArtifactId(),
+                resourcesDirectory,
+                webXml,
+                classpath
+            );
 
-        try {
             while(true) {
-                GFApplication app = glassfish.deploy(war);
+                Application app = glassfish.deploy(war);
 
                 System.out.println("Hit ENTER for redeploy");
 
@@ -138,7 +137,8 @@ public class RunMojo extends AbstractMojo {
 
                 app.undeploy();
             }
-        } catch (IOException e) {
+        }
+        catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(),e);
         }
     }
