@@ -1,3 +1,4 @@
+
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
@@ -37,25 +38,25 @@
 
 package org.glassfish.maven;
 
+// JDK
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+// maven
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.model.Resource;
-import org.glassfish.embed.Application;
-import org.glassfish.embed.ScatteredWar;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+// embedded
+import org.glassfish.embed.EmbeddedDeployer;
+import org.glassfish.embed.ScatteredWar;
 import org.glassfish.embed.EmbeddedInfo;
 import org.glassfish.embed.Server;
+
 
 /**
  * Executes GlassFish v3 inside the current Maven and deploys the application being developed.
@@ -65,6 +66,7 @@ import org.glassfish.embed.Server;
  * @requiresDependencyResolution runtime
  * 
  * @author Kohsuke Kawaguchi
+ * @author Byron Nevins
  */
 public class RunMojo extends AbstractMojo {
 
@@ -127,16 +129,18 @@ public class RunMojo extends AbstractMojo {
                 classpath
             );
 
+
             while(true) {
-                Application app = glassfish.deploy(war);
-
-                System.out.println("Hit ENTER for redeploy");
-
+                EmbeddedDeployer deployer = glassfish.getDeployer();
+                deployer.deployScattered(war, null, null);
+                System.out.println("Hit ENTER to redeploy " + war.getName());
                 // wait for enter
                 new BufferedReader(new InputStreamReader(System.in)).readLine();
-
-                app.undeploy();
+                deployer.undeploy();
             }
+
+
+
         }
         catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(),e);
