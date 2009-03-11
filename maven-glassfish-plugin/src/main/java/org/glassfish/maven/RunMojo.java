@@ -53,10 +53,14 @@ import org.apache.maven.model.Resource;
 
 // embedded
 import org.glassfish.embed.EmbeddedDeployer;
-import org.glassfish.embed.ScatteredWar;
+import org.glassfish.embed.ScatteredArchive;
 import org.glassfish.embed.EmbeddedInfo;
 import org.glassfish.embed.Server;
+import org.glassfish.embed.util.ServerConstants;
 
+// glassfish
+import org.glassfish.api.admin.ParameterNames;
+import org.glassfish.api.deployment.archive.ReadableArchive;
 
 /**
  * Executes GlassFish v3 inside the current Maven and deploys the application being developed.
@@ -122,21 +126,23 @@ public class RunMojo extends AbstractMojo {
             // main artifacts
             classpath.add(new File(project.getBuild().getOutputDirectory()).toURI().toURL());
 
-            ScatteredWar war = new ScatteredWar(
+            ScatteredArchive war = new ScatteredArchive(
                 project.getArtifactId(),
                 resourcesDirectory,
                 webXml,
                 classpath
             );
 
+            Properties params = new Properties();
+            params.put(ParameterNames.VIRTUAL_SERVERS, ServerConstants.DEFAULT_SERVER_NAME);
 
             while(true) {
                 EmbeddedDeployer deployer = glassfish.getDeployer();
-                deployer.deployScattered(war, null, null);
+                deployer.deploy((ReadableArchive)war, params);
                 System.out.println("Hit ENTER to redeploy " + war.getName());
                 // wait for enter
                 new BufferedReader(new InputStreamReader(System.in)).readLine();
-                deployer.undeploy();
+                deployer.undeployAll();
             }
 
 
