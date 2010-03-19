@@ -76,6 +76,9 @@ public abstract class GlassfishMojo extends OceanMojo {
     @Parameter(description = "Debug Glassfish output", defaultValue = "false")
     private boolean debug;
 
+    @Parameter(description = "Force component deployment", defaultValue = "false")
+    private boolean force;
+
     @Parameter(description = "Echo Glassfish asadmin commands", defaultValue = "false")
     private boolean echo;
 
@@ -137,6 +140,14 @@ public abstract class GlassfishMojo extends OceanMojo {
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    public boolean isForce() {
+        return force;
+    }
+
+    public void setForce(boolean force) {
+        this.force = force;
     }
 
     public boolean isEcho() {

@@ -39,6 +39,7 @@
                     <autoCreate>true</autoCreate>
                     <debug>true</debug>
                     <echo>false</echo>
+                    <force>false</force>
                     <terse>true</terse>
                     <skip>${test.int.skip}</skip>
                     <domain>

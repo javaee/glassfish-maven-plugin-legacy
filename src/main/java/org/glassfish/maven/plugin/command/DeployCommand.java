@@ -55,11 +55,13 @@ public class DeployCommand extends InteractiveAsadminCommand {
 
     private Domain domain;
     private Component component;
+    private boolean force;
 
     public DeployCommand(DeploymentGlassfishMojo sharedContext, Domain domain, Component component) {
         super(sharedContext);
         this.domain = domain;
         this.component = component;
+        this.force = sharedContext.isForce();
     }
 
     protected String getName() {
@@ -79,6 +81,7 @@ public class DeployCommand extends InteractiveAsadminCommand {
                 "--port", String.valueOf(domain.getAdminPort()),
                 "--upload=" + upload,
                 "--name", component.getName(),
+                "--force=" + force,
                 component.getArtifact().getAbsolutePath()
         ));
         return parameters;
