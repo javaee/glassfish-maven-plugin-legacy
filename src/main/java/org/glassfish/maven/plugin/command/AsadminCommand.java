@@ -78,9 +78,18 @@ public abstract class AsadminCommand {
         List<String> commandLine = new ArrayList<String>(getParameters());
         File binDir = new File(sharedContext.getGlassfishDirectory(), "bin");
         File asadmin = new File(binDir, "asadmin");
-        if (!asadmin.exists() && System.getProperty("os.name").contains("indows")) {
-            asadmin = new File(binDir, "asadmin.bat");
+
+        // bnevins 9/13/11 -- the install may have both asadmin and asadmin.bat
+        // if we are on Windows - then prefer the .bat file and explicitly set it.
+        // o/w windows will attempt running the UNIX script which is trouble!
+        // http://java.net/jira/browse/MAVEN_GLASSFISH_PLUGIN-5
+        if (System.getProperty("os.name").contains("indows")) {
+            File asadminBat = new File(binDir, "asadmin.bat");
+            if (asadminBat.exists()) {
+                asadmin = asadminBat;
+            }
         }
+
         commandLine.addAll(0, Arrays.asList(
                 asadmin.getAbsolutePath(),
                 getName(),
