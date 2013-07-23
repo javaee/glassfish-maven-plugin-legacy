@@ -64,6 +64,9 @@ public abstract class GlassFishMojo extends AbstractMojo {
         File commandPath;
         commandPath = new File(new File(instStr), "glassfish");
         commandPath = new File(commandPath, "bin");  
+        if (!commandPath.exists())
+            throw new MojoFailureException("The GlassFish directory " +
+                                 commandPath.toString() + " does not exist");
         
         /* Command to execute as a list of strings */
         List<String> cmd = new ArrayList<String>();
