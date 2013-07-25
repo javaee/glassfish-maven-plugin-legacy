@@ -94,18 +94,11 @@ public abstract class GlassFishMojo extends AbstractMojo {
         pb.redirectErrorStream(true);
         Process proc = pb.start();
         
-        /* Log output stream */ 
-        final BufferedReader stdRdr = new BufferedReader(
-                                      new InputStreamReader(proc.getInputStream()));
-        new Thread(new Runnable() {
-            public void run() {
-                String oLine;
-                try {
-                    while ((oLine = stdRdr.readLine()) != null)
-                        getLog().info(oLine);
-                } catch (IOException e) {}
-            }
-        }).start();       
+        /* Get streams */
+        BufferedReader stdRdr = new BufferedReader(
+                                new InputStreamReader(proc.getInputStream()));
+        BufferedReader errRdr = new BufferedReader(
+                                new InputStreamReader(proc.getErrorStream()));
         
         /* Wait for the command to end and get the result value */
         while (true) {
@@ -114,7 +107,7 @@ public abstract class GlassFishMojo extends AbstractMojo {
                 break;
             } catch (IllegalThreadStateException e) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 } catch (InterruptedException ex) {
                     throw new MojoFailureException("Interrupted");
                 }
@@ -122,8 +115,12 @@ public abstract class GlassFishMojo extends AbstractMojo {
         }
         
         /* Show the output from the command */
-        if (exitValue != 0) {
-            throw new MojoFailureException("The GlassFish command failed.");
-        }
+        if (exitValue == 0)
+            while (stdRdr.ready())
+                getLog().info(stdRdr.readLine());
+        else
+            while (errRdr.ready())
+                getLog().info(errRdr.readLine());
+        
     }
 }
