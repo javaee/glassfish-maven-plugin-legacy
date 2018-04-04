@@ -336,6 +336,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
@@ -385,7 +386,7 @@
                     <dependency>
                         <groupId>au.net.ocean.maven.plugin</groupId>
                         <artifactId>maven-plugin-tools</artifactId>
-                        <version>1.2</version>
+                        <version>1.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -425,6 +426,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}/artifacts</outputDirectory>
                     <archive>
